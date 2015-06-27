@@ -9,5 +9,5 @@ import com.sky.demo.common.annotation.tts.bean.BookingContext;
 @DimensionInterface
 public interface IBookingFlightTimeCheck {
 
-    public boolean process(BookingContext context) throws Exception;s
+    public boolean process(BookingContext context) throws Exception;
 }
