@@ -1,14 +1,11 @@
 package com.sky.demo.io.count_character;
 
 import com.sky.demo.io.count_character.service.Reportable;
-import com.sky.demo.io.count_character.util.FileUtil;
+import com.sky.demo.io.count_character.util.FileOpt;
 import org.junit.Test;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.ResourceBundle;
 
 /**
  * Created by rg on 15/6/28.
@@ -37,24 +34,24 @@ import java.util.ResourceBundle;
  * 数字C：456456个
  * ……
  */
-public class FileUtilTest {
+public class FileOptTest {
 
     @Test
     public void test_getResource() {
-        System.out.println(FileUtil.class.getResource(""));
-        System.out.println(FileUtil.class.getResource("/"));
-        System.out.println(FileUtil.class.getResource("test.txt"));
-        System.out.println(FileUtil.class.getResource("/test.txt"));
+        System.out.println(FileOpt.class.getResource(""));
+        System.out.println(FileOpt.class.getResource("/"));
+        System.out.println(FileOpt.class.getResource("test.txt"));
+        System.out.println(FileOpt.class.getResource("/test.txt"));
     }
 
     @Test
     public void test_readFile() {
         String inputPath = "/test.txt";
-        String outputPath = "";
+        String outputPath = "/result.txt";
 
         List<Reportable> result = null;
         try {
-            result = FileUtil.readFile(inputPath);
+            result = FileOpt.readFile(inputPath);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -64,7 +61,7 @@ public class FileUtilTest {
             System.out.println(reportable.getDetail());
         }
 
-        //FileUtil.writeFile(result,outputPath);
+        //FileOpt.writeFile(result,outputPath);
     }
 
 

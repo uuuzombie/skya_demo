@@ -13,12 +13,10 @@ public class DynamicProxyFactory {
     public static ISubject getInstance() {
         ISubject delegate = new RealSubject();
 
-        InvocationHandler handler = new DynamicProxy(delegate);
-
         ISubject proxy = (ISubject) Proxy.newProxyInstance(
-                delegate.getClass().getClassLoader(),
-                new Class[]{ISubject.class},
-                handler
+                delegate.getClass().getClassLoader(),       //定义代理类的类加载器
+                delegate.getClass().getInterfaces(),        ////代理类要实现的接口列表 或new Class[]{ISubject.class} ？
+                new DynamicProxy(delegate)                  //指派方法调用的调用处理程序
         );
         return proxy;
     }

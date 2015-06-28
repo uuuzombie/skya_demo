@@ -17,11 +17,11 @@ import java.util.List;
 /**
  * Created by rg on 15/6/27.
  */
-public class FileUtil {
+public class FileOpt {
 
     public static List<Reportable> readFile(String path) throws IOException {
 
-        URL resource = FileUtil.class.getResource(path);
+        URL resource = FileOpt.class.getResource(path);
         Preconditions.checkNotNull(resource);
 
         File inputFile = new File(resource.getFile());
@@ -42,7 +42,7 @@ public class FileUtil {
 
     public static void writeFile(List<Reportable> reportables, String path){
 
-        File outputFile = new File(FileUtil.class.getResource(path).getFile());
+        File outputFile = new File(FileOpt.class.getResource(path).getFile());
         if (outputFile.exists()) {
             outputFile.delete();
         }
