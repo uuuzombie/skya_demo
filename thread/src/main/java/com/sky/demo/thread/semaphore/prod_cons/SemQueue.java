@@ -3,7 +3,7 @@ package com.sky.demo.thread.semaphore.prod_cons;
 import java.util.concurrent.Semaphore;
 
 /**
- * Created by guang.rong on 2014/9/14.
+ * Created by rg on 2014/9/14.
  */
 public class SemQueue {
 

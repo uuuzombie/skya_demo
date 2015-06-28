@@ -1,7 +1,7 @@
 package com.sky.demo.thread.thread_demo.prod_cons;
 
 /**
- * Created by guang.rong on 2014/9/14.
+ * Created by rg on 2014/9/14.
  */
 public class ThreadQueue {
 
