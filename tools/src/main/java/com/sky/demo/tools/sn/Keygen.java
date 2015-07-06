@@ -7,10 +7,10 @@ import java.util.zip.CRC32;
 
 /**
  * Created by rg on 2015/6/9.
- * 13,14
  */
-public class IdeaSN {
+public class KeyGen {
 
+    private static final int VERSION = 14;
 
     public static short getCRC(String s, int i, byte bytes[]) {
         CRC32 crc32 = new CRC32();
@@ -70,8 +70,8 @@ public class IdeaSN {
     public static String MakeKey(String name, int days, int id) {
         id %= 100000;
         byte bkey[] = new byte[12];
-        bkey[0] = (byte) 1; // Product type: IntelliJ IDEA is 1
-        bkey[1] = 14; // version
+        bkey[0] = (byte) 1;         // Product type: IntelliJ IDEA is 1
+        bkey[1] = VERSION;          // version
 
         Date d = new Date();
         long ld = (d.getTime() >> 16);
@@ -109,15 +109,5 @@ public class IdeaSN {
         return s0;
     }
 
-    public static void main(String[] args) {
-//        if (args.length == 0) {
-//            System.err.printf("*** Usage: %s name%n", IdeaSN.class.getCanonicalName());
-//            System.exit(1);
-//        }
 
-        String name = "dev_sky";
-        Random r = new Random();
-        System.out.println(name);
-        System.out.println(MakeKey(name, 0, r.nextInt(100000)));
-    }
 }
