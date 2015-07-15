@@ -19,6 +19,7 @@
         <module>thread</module>
         <module>interfaces</module>
         <module>util</module>
+        <module>cache</module>
     </modules>
 
     <properties>
