@@ -5,10 +5,9 @@ import org.junit.Test;
 import java.util.Random;
 
 /**
- * Created by rg on 2015/6/29.
+ * Created by rg on 7/15/15.
  */
 public class KeyGenTest {
-
     @Test
     public void test_makeKey() {
 
