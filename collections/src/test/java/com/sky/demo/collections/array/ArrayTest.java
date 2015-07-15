@@ -1,6 +1,9 @@
 package com.sky.demo.collections.array;
 
+import com.google.common.collect.Lists;
 import org.junit.Test;
+
+import java.util.List;
 
 import static org.junit.Assert.assertTrue;
 
@@ -32,6 +35,22 @@ public class ArrayTest {
         if(arrays == null) {
             System.out.println("array is null");
         }
-
     }
+
+    @Test
+    public void test_List_to_Array() {
+        List<Object> list = Lists.newArrayList();
+        list.add("10");
+        list.add(20);
+
+        Object[] params = new Object[]{list};   //list作为数组中第一个元素
+        System.out.println( params.length);     // =1
+        for (Object o : params) {
+            System.out.println(o);
+        }
+
+        params = list.toArray();        //List已有转数组的方法
+        System.out.println(params.length);
+    }
+
 }
