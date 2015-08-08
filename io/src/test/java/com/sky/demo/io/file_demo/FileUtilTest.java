@@ -77,4 +77,13 @@ public class FileUtilTest {
         String path = "/";
         FileUtil.writeFileByBuffer(path);
     }
+
+
+
+    @Test
+    public void test_getAbsolutePath() {
+        String fileName = "/text.txt";
+        System.out.println(FileUtil.getAbsolutePath(fileName));
+
+    }
 }
