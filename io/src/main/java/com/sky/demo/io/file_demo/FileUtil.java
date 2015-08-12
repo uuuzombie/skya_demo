@@ -85,7 +85,7 @@ public class FileUtil {
      */
     public static void readFile(String path) throws IOException {
 
-        //File inputFile = new File(this.getClass().getResource(path).getFile()); // 如果path路径文件不存在，则会NPE
+        //File inputFile = new File(this.getClass().getResource(path).getFile()); // 如果path路径文件不存在，则会抛空指针
 
         //另一种读取文件方式，更安全
         URL resource = FileUtil.class.getResource(path);
