@@ -86,7 +86,7 @@ public class FileUtil {
      * @param path 文件路径，需要提前建好，否则会抛出NPE
      * @throws FileNotFoundException
      */
-    public static void outputResult(Multimap<String, String> map, List<ConditionInfo> listConditionInfos, String path) throws FileNotFoundException {
+    public static void outputResult(Multimap<String, String> map, List<ConditionInfo> listConditionInfos, String path) throws IOException {
 
         //File outputFile = new File(path);    //文件不需要提前建好
         File outputFile = new File(FileUtil.class.getResource(path).getFile());    //文件需要提前建好
@@ -94,11 +94,14 @@ public class FileUtil {
             outputFile.delete();
         }
 
-        try {
-            outputFile.createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (!outputFile.createNewFile()) {
+            throw new RuntimeException("Can not create file!");
         }
+//        try {
+//            outputFile.createNewFile();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
         PrintStream printStream = null;
         try{
@@ -116,7 +119,9 @@ public class FileUtil {
             }
         } finally {
             try {
-                printStream.close();
+                if (printStream != null) {
+                    printStream.close();
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }

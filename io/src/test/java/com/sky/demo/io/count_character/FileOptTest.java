@@ -38,9 +38,9 @@ public class FileOptTest {
 
     @Test
     public void test_getResource() {
-        System.out.println(FileOpt.class.getResource(""));
+        System.out.println(this.getClass().getResource(""));
         System.out.println(FileOpt.class.getResource("/"));
-        System.out.println(FileOpt.class.getResource("test.txt"));
+        System.out.println(this.getClass().getResource("test.txt"));
         System.out.println(FileOpt.class.getResource("/test.txt"));
     }
 

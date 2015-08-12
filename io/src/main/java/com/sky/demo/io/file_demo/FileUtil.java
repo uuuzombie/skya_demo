@@ -72,8 +72,30 @@ public class FileUtil {
      * @return
      */
     public static URL readPath(String path) {
-        URL absolutePath = FileUtil.class.getResource(path);
-        return absolutePath;
+        URL resourceURL = FileUtil.class.getResource(path);
+        return resourceURL;
+    }
+
+    /**
+     * 读取路径
+     * @param fileName
+     * @return
+     */
+    public static String getAbsolutePath(String fileName) {
+        URL resourceURL = FileUtil.class.getResource(fileName);
+        System.out.println(resourceURL.toString());
+        return resourceURL.getPath();
+    }
+
+    /**
+     * 读取jar包中配置文件
+     * 无论是在打jar包之前还是之后都可以正确读取conf.properties文件中的信息
+     * @param fileName
+     * @return
+     */
+    public static InputStream getConfigFromJar(String fileName) {
+        InputStream in = FileUtil.class.getClassLoader().getResourceAsStream(fileName);
+        return in;
     }
 
 
