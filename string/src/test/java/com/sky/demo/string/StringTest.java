@@ -104,6 +104,17 @@ public class StringTest {
                 System.out.println(str);
             }
         }
+    }
 
+
+    @Test
+    public void test_toCharArray() {
+        String str = "ab中国|*人￥！c";
+        char[] charArray = str.toCharArray();
+        System.out.println(charArray);
+
+        for (char ch : charArray) {
+            System.out.println(ch);
+        }
     }
 }
