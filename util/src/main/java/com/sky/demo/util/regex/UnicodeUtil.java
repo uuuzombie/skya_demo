@@ -8,6 +8,11 @@ import java.util.regex.Pattern;
  */
 public class UnicodeUtil {
 
+    private static final Pattern pattern_cn = Pattern.compile("[\\u4e00-\\u9fa5]");
+
+    private static final Pattern pattern_unicode = Pattern.compile("(\\\\u(\\p{XDigit}{4}))");
+
+
     /**
      * 编码
      * @param str
@@ -24,7 +29,6 @@ public class UnicodeUtil {
             }
             unicodeStr.append("\\u").append(hexB);
         }
-
         return unicodeStr.toString();
     }
 
@@ -48,8 +52,7 @@ public class UnicodeUtil {
      * @return
      */
     public static String encodeUnicodeOfCn(String str) {
-        Pattern pattern = Pattern.compile("[\\u4e00-\\u9fa5]");
-        Matcher matcher = pattern.matcher(str);
+        Matcher matcher = pattern_cn.matcher(str);
 
         while (matcher.find()) {
             String unicode = encodeUnicode(matcher.group());
@@ -90,8 +93,7 @@ public class UnicodeUtil {
      * @return
      */
     public static String decodeUnicodeByRegex(String str) {
-        Pattern pattern = Pattern.compile("(\\\\u(\\p{XDigit}{4}))");
-        Matcher matcher = pattern.matcher(str);
+        Matcher matcher = pattern_unicode.matcher(str);
         char ch;
         while (matcher.find()) {
             ch = (char) Integer.parseInt(matcher.group(2), 16);
