@@ -26,7 +26,6 @@ public class FileUtil {
      * @throws IOException
      */
     public static List<String> readFile(String path) throws IOException {
-
         String p = FileUtil.class.getResource(path).toString();    //注意路径前面的 file:
         System.out.println(p);
 
@@ -34,7 +33,6 @@ public class FileUtil {
 //        if (!file.exists()) {
 //            throw new FileNotFoundException("No such file!");
 //        }
-
 
         URL resource = FileUtil.class.getResource(path);
         Preconditions.checkNotNull(resource);
@@ -109,7 +107,6 @@ public class FileUtil {
 
             //写入文件
             for (ConditionInfo conditionInfo : listConditionInfos) {
-
                 printStream.println(conditionInfo.getConditionId() + ",count:" + conditionInfo.getCount() + ":");
 
                 Collection<String> collection = map.get(conditionInfo.getConditionId());
@@ -126,6 +123,5 @@ public class FileUtil {
                 e.printStackTrace();
             }
         }
-
     }
 }

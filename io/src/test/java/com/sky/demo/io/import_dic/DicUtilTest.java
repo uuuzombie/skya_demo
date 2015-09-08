@@ -1,4 +1,4 @@
-package com.sky.demo.io.dic_import;
+package com.sky.demo.io.import_dic;
 
 import org.junit.Test;
 
@@ -12,11 +12,9 @@ public class DicUtilTest {
 
     @Test
     public void test_import_dic() throws IOException {
-        String path = "/test.dic";
+        String path = "/dic.txt";
 
         Map<String, Integer> result = DicUtil.importDic(path);
         System.out.println(result);
-
-
     }
 }

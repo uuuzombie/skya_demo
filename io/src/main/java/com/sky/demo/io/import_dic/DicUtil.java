@@ -1,4 +1,4 @@
-package com.sky.demo.io.dic_import;
+package com.sky.demo.io.import_dic;
 
 import java.io.*;
 import java.net.URL;
@@ -14,13 +14,13 @@ import com.google.common.collect.Maps;
  */
 public class DicUtil {
 
-    public static Map<String, Integer> importDic(String path) throws IOException {
+    public static Map<String, Integer> importDic(final String path) throws IOException {
 
-        URL resource = DicUtil.class.getResource(path);
+        URL resource = DicUtil.class.getResource(path);     //  target/test-classes
         Preconditions.checkNotNull(resource);
 
         File inputFile = new File(resource.getFile());
-//        File inputFile = new File(path);
+//        File inputFile = new File(path);      //绝对路径
         Preconditions.checkState(inputFile.exists() && inputFile.isFile());
 
         Map<String, Integer> result = Maps.newHashMap();
@@ -32,7 +32,6 @@ public class DicUtil {
             while ((line = br.readLine()) != null) {
                 parseLineToDic(line,result);
             }
-
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } finally {
@@ -40,20 +39,15 @@ public class DicUtil {
                 br.close();
             }
         }
-
         return result;
     }
 
     private static void parseLineToDic(String line, Map<String, Integer> result) {
+        line = line.replaceAll("\t", " ");
 
-//        Map<String,String> map = Splitter.on("\n").withKeyValueSeparator("\t").split(line);
-//
-//        for (Map.Entry<String, String> entry : map.entrySet()) {
-//            result.put(entry.getKey(), Integer.valueOf(entry.getValue()));
-//        }
-
-        List<String> list = Splitter.on("\t").splitToList(line);
+        List<String> list = Splitter.on(" ").omitEmptyStrings().trimResults().splitToList(line);
         result.put(list.get(0), Integer.valueOf(list.get(1)));
+
     }
 
 
