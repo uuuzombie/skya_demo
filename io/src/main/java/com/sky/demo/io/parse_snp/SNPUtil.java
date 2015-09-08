@@ -25,8 +25,7 @@ public class SNPUtil {
             boolean flag = false;
             while ((line = br.readLine()) != null){
                 if (line.startsWith("rs")){
-
-                    if (flag == true){
+                    if (flag){
                         sb.delete(0,sb.length());
                     }
 

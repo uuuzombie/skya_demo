@@ -107,7 +107,7 @@ public class FileUtil {
      */
     public static void readFile(String path) throws IOException {
 
-        //File inputFile = new File(this.getClass().getResource(path).getFile()); // 如果path路径文件不存在，则会抛空指针
+//        File inputFile = new File(this.getClass().getResource(path).getFile()); // 如果path路径文件不存在，则会抛空指针
 
         //另一种读取文件方式，更安全
         URL resource = FileUtil.class.getResource(path);
@@ -149,19 +149,15 @@ public class FileUtil {
             outputFile.delete();
         }
 
-        try {
-            outputFile.createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
         PrintStream printStream = null;
         try {
+            outputFile.createNewFile();
+
             printStream = new PrintStream(outputFile);
-
             printStream.println("Something");
-
         } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         } finally {
             if (printStream != null) {
@@ -177,7 +173,6 @@ public class FileUtil {
      * @throws IOException
      */
     public static void writeFileByBuffer(String filePath) throws IOException {
-
         URL absolutePath = FileUtil.class.getResource(filePath);
         System.out.println(absolutePath);
 

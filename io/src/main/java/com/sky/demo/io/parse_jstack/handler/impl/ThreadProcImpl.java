@@ -3,6 +3,7 @@ package com.sky.demo.io.parse_jstack.handler.impl;
 import com.google.common.base.CharMatcher;
 import com.google.common.base.Joiner;
 import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import com.google.common.primitives.Ints;
 import com.sky.demo.io.parse_jstack.handler.ThreadProc;
@@ -17,13 +18,12 @@ import java.util.regex.Pattern;
  */
 public class ThreadProcImpl implements ThreadProc {
 
-
     @Override
     public Multimap<String, String> process(List<String> listStrings) {
         Multimap<String, String> map = ArrayListMultimap.create();
 
         for (String line : listStrings) {
-            List<String> tempList = new ArrayList<String>();
+            List<String> tempList = Lists.newArrayList();
             tempList.add(parseThreadId(line));
             tempList.add(parseThreadName(line));
             tempList.add(parseThreadState(line));
