@@ -5,17 +5,20 @@ package com.sky.demo.thread.thread_local;
  */
 public class ThreadLocalTest {
 
-    public static InheritableThreadLocal<String> QT = new InheritableThreadLocal<String>();
+//    public static ThreadLocal<String> QT = new InheritableThreadLocal<String>();
+    public static ThreadLocal<String> QT = new ThreadLocal<String>();
 
     public static void main(String[] args) {
 
-        for (int i = 0; i < 10000; i++) {
+        for (int i = 0; i < 100; i++) {
             final int finalI = i;
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    InheritableThreadLocal<String> QT = new InheritableThreadLocal<String>();
+                    //InheritableThreadLocal<String> QT = new InheritableThreadLocal<String>();
                     QT.set(String.valueOf(finalI));
+
+                    System.out.println(Thread.currentThread().getName() + ":" + QT.get());
                 }
             }).start();
         }
