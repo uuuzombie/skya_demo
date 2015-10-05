@@ -1,4 +1,4 @@
-package com.sky.demo.thread.thread_demo.prod_cons.test;
+package com.sky.demo.thread.thread_demo.prod_cons;
 
 import com.sky.demo.thread.thread_demo.prod_cons.Consumer;
 import com.sky.demo.thread.thread_demo.prod_cons.Producer;
