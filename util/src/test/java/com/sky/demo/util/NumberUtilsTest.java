@@ -1,8 +1,11 @@
 package com.sky.demo.util;
 
 
+import com.google.common.collect.Lists;
 import org.apache.commons.lang.math.NumberUtils;
 import org.junit.Test;
+
+import java.util.List;
 
 public class NumberUtilsTest {
 
@@ -44,5 +47,25 @@ public class NumberUtilsTest {
 
         int oldTax4 = (int) NumberUtils.toDouble("-123");
         System.out.println(oldTax4);
+    }
+
+    @Test
+    public void test_NumberUtils_isDigits() {
+        List<String> list = Lists.newArrayList("-1", "0", "1", "-0.5", "1.0", "2.1");
+        for (String str : list) {
+            if (!NumberUtils.isDigits(str)) {
+                System.out.println(str + " is not digit");
+            }
+        }
+    }
+
+    @Test
+    public void test_NumberUtils_isNumber() {
+        List<String> list = Lists.newArrayList("-1", "0", "1", "1.0", "2.1");
+        for (String str : list) {
+            if (!NumberUtils.isNumber(str)) {
+                System.out.println(str + " is not number");
+            }
+        }
     }
 }
