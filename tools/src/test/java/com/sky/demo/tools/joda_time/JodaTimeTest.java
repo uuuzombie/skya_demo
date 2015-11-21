@@ -32,6 +32,80 @@ public class JodaTimeTest {
         System.out.println(pre24Hour.toString(DATE_YYYY_MM_DD_HH_MM_SS));
     }
 
+
+    @Test
+    public void test_year() {
+        DateTime now = new DateTime();
+        System.out.println(now.toString(DATE_YYYY_MM_DD_HH_MM_SS));
+
+        DateTime pre = now.year().withMinimumValue();
+        String beginDate = pre.toString(DATE_YYYY_MM_DD_HH_MM_SS);
+        System.out.println(beginDate);
+
+        pre = now.year().withMaximumValue();
+        String endDate = pre.toString(DATE_YYYY_MM_DD_HH_MM_SS);
+        System.out.println(endDate);
+
+        pre = now.year().roundFloorCopy();
+        System.out.println(pre.toString(DATE_YYYY_MM_DD_HH_MM_SS));
+
+        pre = now.year().roundCeilingCopy();
+        System.out.println(pre.toString(DATE_YYYY_MM_DD_HH_MM_SS));
+
+    }
+
+    @Test
+    public void test_getMonth() {
+        DateTime now = new DateTime();
+        System.out.println(now.toString(DATE_YYYY_MM_DD_HH_MM_SS));
+
+        int month = now.getMonthOfYear();
+        System.out.println(month);
+
+    }
+
+    @Test
+    public void test_monthOfYear() {
+        DateTime now = new DateTime();
+        System.out.println(now.toString(DATE_YYYY_MM_DD_HH_MM_SS));
+
+        DateTime pre = now.monthOfYear().withMinimumValue();
+        String beginDate = pre.toString(DATE_YYYY_MM_DD_HH_MM_SS);
+        System.out.println(beginDate);
+
+        pre = now.monthOfYear().withMaximumValue();
+        String endDate = pre.toString(DATE_YYYY_MM_DD_HH_MM_SS);
+        System.out.println(endDate);
+
+        pre = now.monthOfYear().roundFloorCopy();
+        System.out.println(pre.toString(DATE_YYYY_MM_DD_HH_MM_SS));
+
+        pre = now.monthOfYear().roundCeilingCopy();
+        System.out.println(pre.toString(DATE_YYYY_MM_DD_HH_MM_SS));
+
+    }
+
+    @Test
+    public void test_weekOfWeekyear() {
+        DateTime now = new DateTime();
+        System.out.println(now.toString(DATE_YYYY_MM_DD_HH_MM_SS));
+
+        DateTime pre = now.weekOfWeekyear().withMinimumValue();
+        String beginDate = pre.toString(DATE_YYYY_MM_DD_HH_MM_SS);
+        System.out.println(beginDate);
+
+        pre = now.weekOfWeekyear().withMaximumValue();
+        String endDate = pre.toString(DATE_YYYY_MM_DD_HH_MM_SS);
+        System.out.println(endDate);
+
+        pre = now.weekOfWeekyear().roundFloorCopy();
+        System.out.println(pre.toString(DATE_YYYY_MM_DD_HH_MM_SS));
+
+        pre = now.weekOfWeekyear().roundCeilingCopy();
+        System.out.println(pre.toString(DATE_YYYY_MM_DD_HH_MM_SS));
+
+    }
+
     @Test
     public void test_dayOfYear() {
         DateTime now = new DateTime();
@@ -96,6 +170,26 @@ public class JodaTimeTest {
     }
 
     @Test
+    public void test_secondOfDay() {
+        DateTime now = new DateTime();
+        System.out.println(now.toString(DATE_YYYY_MM_DD_HH_MM_SS));
+
+        DateTime pre = now.minusDays(1).secondOfDay().withMinimumValue();
+        String beginDate = pre.toString(DATE_YYYY_MM_DD_HH_MM_SS);
+        System.out.println(beginDate);
+
+        pre = now.minusDays(1).secondOfDay().withMaximumValue();
+        String endDate = pre.toString(DATE_YYYY_MM_DD_HH_MM_SS);
+        System.out.println(endDate);
+
+        pre = now.secondOfDay().roundFloorCopy();
+        System.out.println(pre.toString(DATE_YYYY_MM_DD_HH_MM_SS));
+
+        pre = now.secondOfDay().roundCeilingCopy();
+        System.out.println(pre.toString(DATE_YYYY_MM_DD_HH_MM_SS));
+    }
+
+    @Test
     public void test_yesterday() {
         DateTime now = new DateTime();
         System.out.println(now.toString(DATE_YYYY_MM_DD_HH_MM_SS));
@@ -107,27 +201,6 @@ public class JodaTimeTest {
         String endDate = pre.toString(DATE_YYYY_MM_DD) + " 23:59:59";
         System.out.println(endDate);
 
-    }
-
-    @Test
-    public void test_secondOfDay() {
-        DateTime now = new DateTime();
-        System.out.println(now.toString(DATE_YYYY_MM_DD_HH_MM_SS));
-
-        DateTime pre = now.secondOfDay().withMinimumValue();
-        String beginDate = pre.toString(DATE_YYYY_MM_DD_HH_MM_SS);
-        System.out.println(beginDate);
-
-
-        pre = now.secondOfDay().withMaximumValue();
-        String endDate = pre.toString(DATE_YYYY_MM_DD_HH_MM_SS);
-        System.out.println(endDate);
-
-        pre = now.secondOfDay().roundFloorCopy();
-        System.out.println(pre.toString(DATE_YYYY_MM_DD_HH_MM_SS));
-
-        pre = now.secondOfDay().roundCeilingCopy();
-        System.out.println(pre.toString(DATE_YYYY_MM_DD_HH_MM_SS));
     }
 
 
