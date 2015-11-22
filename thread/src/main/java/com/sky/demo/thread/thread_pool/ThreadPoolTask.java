@@ -14,7 +14,7 @@ public class ThreadPoolTask implements Runnable {
 
     @Override
     public void run() {
-        // 处理一个任务，这里的处理方式太简单了，仅仅是一个打印语句
+        // 处理一个任务，这里的处理方式仅仅是一个打印语句
         System.out.println("======start " + threadPoolTaskData);
         try {
             //便于观察，等待一段时间

@@ -1,24 +1,25 @@
 package com.sky.demo.collect.map;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import com.google.common.collect.Maps;
+
 /**
  * Created by rg on 11/22/15.
  */
-public class ConcurrentHashMapVsSynchronizedMap {
+public class MapCompare {
 
     public final static int THREAD_POOL_SIZE = 5;
 
-    public static Map<String, Integer> hashTable = null;
-    public static Map<String, Integer> synchronizedMap = null;
-    public static Map<String, Integer> concurrentHashMap = null;
+    //Compare with Hashtable and SynchronizedMap and ConcurrentHashMap
+    public static Map<String, Integer> hashTable = new Hashtable<>();
+    public static Map<String, Integer> synchronizedMap = Collections.synchronizedMap(Maps.newHashMap());
+    public static Map<String, Integer> concurrentHashMap = Maps.newConcurrentMap();
 
     public static void performTest(final Map<String, Integer> map) throws InterruptedException {
 
@@ -64,15 +65,12 @@ public class ConcurrentHashMapVsSynchronizedMap {
     public static void main(String[] args) throws InterruptedException {
 
         // Test with Hashtable Object
-        hashTable = new Hashtable<String, Integer>();
         performTest(hashTable);
 
         // Test with synchronizedMap Object
-        synchronizedMap = Collections.synchronizedMap(new HashMap<String, Integer>());
         performTest(synchronizedMap);
 
         // Test with ConcurrentHashMap Object
-        concurrentHashMap = new ConcurrentHashMap<String, Integer>();
         performTest(concurrentHashMap);
 
     }
