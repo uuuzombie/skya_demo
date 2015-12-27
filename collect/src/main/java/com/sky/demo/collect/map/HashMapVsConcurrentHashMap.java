@@ -58,19 +58,17 @@ public class HashMapVsConcurrentHashMap {
         System.out.println("Test for " + map.getClass());
 
         long startTime = System.nanoTime();
-        ExecutorService executorService = Executors.newFixedThreadPool(THREAD_POOL_SIZE);
+        ExecutorService threadPool = Executors.newFixedThreadPool(THREAD_POOL_SIZE);
 
         for (int i = 0; i < THREAD_POOL_SIZE; ++i) {
-            executorService.execute(new Runnable() {
-
-
+            threadPool.execute(new Runnable() {
                 @Override
                 public void run() {
 
-                    for (int j = 0 ;j < 100; ++j) {
+                    for (int j = 0; j < 100; ++j) {
                         if (map instanceof HashMap) {
                             syncAdd(map, KEY);
-                        } else if (map instanceof ConcurrentHashMap){
+                        } else if (map instanceof ConcurrentHashMap) {
                             //syncAdd(map, KEY);  //ConcurrentHashMap 用关键字synchronized修饰add方法,运行之后仍然是线程不安全的 ?
 
                             //add(map, KEY);  //不安全
@@ -84,10 +82,10 @@ public class HashMapVsConcurrentHashMap {
             });
         }
 
-        executorService.shutdown();
+        threadPool.shutdown();
 
         // Blocks until all tasks have completed execution after a shutdown request
-        executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
+        threadPool.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
 
         long endTime = System.nanoTime();
         long totalTime = (endTime - startTime) / 1000000L;

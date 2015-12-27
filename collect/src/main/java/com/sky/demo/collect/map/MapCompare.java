@@ -28,10 +28,10 @@ public class MapCompare {
         for (int i = 0; i < 5; i++) {
 
             long startTime = System.nanoTime();
-            ExecutorService executorService = Executors.newFixedThreadPool(THREAD_POOL_SIZE);
+            ExecutorService threadPool = Executors.newFixedThreadPool(THREAD_POOL_SIZE);
 
             for (int j = 0; j < THREAD_POOL_SIZE; j++) {
-                executorService.execute(new Runnable() {
+                threadPool.execute(new Runnable() {
                     @SuppressWarnings("unused")
                     @Override
                     public void run() {
@@ -49,10 +49,10 @@ public class MapCompare {
             }
 
             // Make sure executor stops
-            executorService.shutdown();
+            threadPool.shutdown();
 
             // Blocks until all tasks have completed execution after a shutdown request
-            executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
+            threadPool.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
 
             long entTime = System.nanoTime();
             long totalTime = (entTime - startTime) / 1000000L;
