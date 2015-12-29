@@ -9,6 +9,7 @@ import net.sf.jsqlparser.expression.operators.arithmetic.Multiplication;
 import net.sf.jsqlparser.parser.CCJSqlParserManager;
 import net.sf.jsqlparser.parser.CCJSqlParserUtil;
 import net.sf.jsqlparser.schema.Column;
+import net.sf.jsqlparser.statement.select.PlainSelect;
 import net.sf.jsqlparser.statement.select.Select;
 import net.sf.jsqlparser.statement.select.SelectBody;
 import net.sf.jsqlparser.util.TablesNamesFinder;
@@ -34,6 +35,7 @@ public class CCJSqlParserUtilTest {
 
         String sql = "select * from (select * from my.incident_report)report inner join (select * from my.element)element on report.id=element.report_id";
 
+        sql = "SELECT \"d.id\", [d.uuid], `d.name`, \"d.am?ou nt*\", d.percentage, d.modified_time, dc.discount_id FROM discount d LEFT OUTER JOIN \"discount_category\" dc ON d.id = dc.discount_id WHERE merchant_id=? AND deleted=? AND dc.discount_id IS NULL AND modified_time<? AND modified_time>=? ORDER BY modified_time";
         try {
             Select selectStatement = (Select) parserManager.parse(new StringReader(sql));
 
@@ -41,7 +43,9 @@ public class CCJSqlParserUtilTest {
             List<String> tables = tablesNamesFinder.getTableList(selectStatement);
             System.out.println(tables);
 
-            SelectBody selectBody = selectStatement.getSelectBody();
+
+            PlainSelect plainSelect = (PlainSelect) selectStatement.getSelectBody();
+            System.out.println(plainSelect.getSelectItems());
 
 
         } catch (JSQLParserException e) {
