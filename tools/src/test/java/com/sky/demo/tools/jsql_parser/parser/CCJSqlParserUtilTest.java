@@ -1,5 +1,6 @@
 package com.sky.demo.tools.jsql_parser.parser;
 
+import jdk.nashorn.internal.objects.annotations.Where;
 import net.sf.jsqlparser.JSQLParserException;
 import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.LongValue;
@@ -9,10 +10,7 @@ import net.sf.jsqlparser.expression.operators.arithmetic.Multiplication;
 import net.sf.jsqlparser.parser.CCJSqlParserManager;
 import net.sf.jsqlparser.parser.CCJSqlParserUtil;
 import net.sf.jsqlparser.schema.Column;
-import net.sf.jsqlparser.statement.select.Limit;
-import net.sf.jsqlparser.statement.select.PlainSelect;
-import net.sf.jsqlparser.statement.select.Select;
-import net.sf.jsqlparser.statement.select.SelectBody;
+import net.sf.jsqlparser.statement.select.*;
 import net.sf.jsqlparser.util.TablesNamesFinder;
 import org.junit.Test;
 
@@ -34,7 +32,7 @@ public class CCJSqlParserUtilTest {
 
         //String sql = "select report.*, element.* from my.incident_report as report, my.element element";
 
-        String sql = "select * from (select * from my.incident_report)report inner join (select * from my.element limit 10)element on report.id=element.report_id limit 20";
+        String sql = "select * from (select top(10) * from my.incident_report)report inner join (select * from my.element limit 10)element on report.id=element.report_id where element.id > 10 limit 20";
 
         //sql = "SELECT \"d.id\", [d.uuid], `d.name`, \"d.am?ou nt*\", d.percentage, d.modified_time, dc.discount_id FROM discount d LEFT OUTER JOIN \"discount_category\" dc ON d.id = dc.discount_id WHERE merchant_id=? AND deleted=? AND dc.discount_id IS NULL AND modified_time<? AND modified_time>=? and rownum <=10 ORDER BY modified_time ";
         try {
@@ -50,6 +48,12 @@ public class CCJSqlParserUtilTest {
 
             Limit limit = plainSelect.getLimit();
             System.out.println(limit);
+
+            Expression where = plainSelect.getWhere();
+            System.out.println(where);
+
+            Top top = plainSelect.getTop();
+            System.out.println(top);
 
         } catch (JSQLParserException e) {
             e.printStackTrace();
