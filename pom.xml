@@ -131,6 +131,12 @@
                 <version>1.4</version>
                 <scope>runtime</scope>
             </dependency>
+            <!--freemarker-->
+            <dependency>
+                <groupId>org.freemarker</groupId>
+                <artifactId>freemarker</artifactId>
+                <version>2.3.23</version>
+            </dependency>
 
             <!--util-->
             <dependency>
@@ -246,11 +252,11 @@
                 <artifactId>jsqlparser</artifactId>
                 <version>0.9.4</version>
             </dependency>
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>druid</artifactId>
-                <version>1.0.13</version>
-            </dependency>
+            <!--<dependency>-->
+                <!--<groupId>com.alibaba</groupId>-->
+                <!--<artifactId>druid</artifactId>-->
+                <!--<version>1.0.13</version>-->
+            <!--</dependency>-->
 
 
         </dependencies>
@@ -335,6 +341,10 @@
             <groupId>velocity-tools</groupId>
             <artifactId>velocity-tools</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>com.google.guava</groupId>
@@ -417,10 +427,10 @@
             <groupId>com.github.jsqlparser</groupId>
             <artifactId>jsqlparser</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.alibaba</groupId>-->
+            <!--<artifactId>druid</artifactId>-->
+        <!--</dependency>-->
 
 
     </dependencies>

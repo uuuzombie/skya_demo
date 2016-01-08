@@ -5,6 +5,11 @@ import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import freemarker.core.ParseException;
+import freemarker.template.MalformedTemplateNameException;
+import freemarker.template.TemplateException;
+import freemarker.template.TemplateNotFoundException;
+import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -339,4 +344,82 @@ public class PdfUtil {
         }
 
     }
+
+
+
+    /**
+     * 生成PDF到文件
+     * @param ftlPath 模板文件路径（不含文件名）
+     * @param ftlName 模板文件（不含路径）
+     * @param imageDiskPath 图片的磁盘路径
+     * @param data 数据
+     * @param outputFile 目标文件（全路径名称）
+     */
+    public static void generateToFile(String ftlPath, String ftlName, String imageDiskPath, Object data, String outputFile) throws Exception {
+        String html = PdfHelper.getPdfContent(ftlPath, ftlName, data);
+        OutputStream out = null;
+        ITextRenderer render = null;
+        try {
+            out = new FileOutputStream(outputFile);
+            render = PdfHelper.getRender();
+            render.setDocumentFromString(html);
+            if(imageDiskPath != null && !imageDiskPath.equals("")) {
+                //html中如果有图片，图片的路径则使用这里设置的路径的相对路径，这个是作为根路径
+                render.getSharedContext().setBaseURL("file:/" + imageDiskPath);
+            }
+            render.layout();
+            render.createPDF(out);
+
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (render != null) {
+                render.finishPDF();
+            }
+            render = null;
+            if (out != null) {
+                out.close();
+            }
+        }
+
+    }
+
+    /**
+     * 生成PDF到输出流中（ServletOutputStream用于下载PDF）
+     * @param ftlPath ftl模板文件的路径（不含文件名）
+     * @param ftlName ftl模板文件的名称（不含路径）
+     * @param imageDiskPath 如果PDF中要求图片，那么需要传入图片所在位置的磁盘路径
+     * @param data 输入到FTL中的数据
+     */
+    public static OutputStream generateToOutputStream(String ftlPath, String ftlName, String imageDiskPath, Object data) throws TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException, DocumentException {
+        String html = PdfHelper.getPdfContent(ftlPath, ftlName, data);
+        OutputStream out = null;
+        ITextRenderer render = null;
+        try {
+            render = PdfHelper.getRender();
+            render.setDocumentFromString(html);
+            if(imageDiskPath != null && !imageDiskPath.equals("")) {
+                //html中如果有图片，图片的路径则使用这里设置的路径的相对路径，这个是作为根路径
+                render.getSharedContext().setBaseURL("file:/" + imageDiskPath);
+            }
+            render.layout();
+            render.createPDF(out);
+
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (render != null) {
+                render.finishPDF();
+            }
+            render = null;
+        }
+        return out;
+    }
+
+
+
 }
