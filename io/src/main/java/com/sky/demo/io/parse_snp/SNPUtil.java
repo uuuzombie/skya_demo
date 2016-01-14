@@ -48,7 +48,9 @@ public class SNPUtil {
             e.printStackTrace();
         }finally {
             try {
-                br.close();
+                if (br != null) {
+                    br.close();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -56,30 +58,33 @@ public class SNPUtil {
         return listString;
     }
 
-    public static void writeToFile(String path,List<String> listString){
+    public static void writeToFile(String path,List<String> listString) {
         File file = new File(path);
-        if (file.exists()){
+
+        if (file != null && file.exists()) {
             file.delete();
         }
 
-        try{
+        try {
             file.createNewFile();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         PrintStream printStream = null;
-        try{
+        try {
             printStream = new PrintStream(file);
             for (String s : listString) {
                 printStream.println(s);
             }
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             try {
-                printStream.close();
+                if (printStream != null) {
+                    printStream.close();
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -8,5 +8,6 @@ import java.util.Map;
 public interface Reportable {
 
     public Map<String,Integer> getSummary();
+
     public Map<String,Integer> getDetail();
 }

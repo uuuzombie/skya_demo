@@ -104,15 +104,15 @@ public class FileUtil {
      * @param path
      * @throws IOException
      */
-    public static void readFile(String path) throws IOException {
+    public static void readFile(String path) {
 
 //        File inputFile = new File(this.getClass().getResource(path).getFile()); // 如果path路径文件不存在，则会抛空指针
 
         //另一种读取文件方式，更安全
         URL resource = FileUtil.class.getResource(path);
         Preconditions.checkNotNull(resource);
-
         File inputFile = new File(resource.getFile());
+
         Preconditions.checkState(inputFile.exists() && inputFile.isFile());
 
         BufferedReader br = null;
@@ -128,9 +128,15 @@ public class FileUtil {
             e.printStackTrace();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         } finally {
             if (br != null) {
-                br.close();
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

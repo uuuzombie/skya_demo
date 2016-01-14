@@ -11,10 +11,18 @@ import java.util.Map;
 public class DicUtilTest {
 
     @Test
-    public void test_import_dic() throws IOException {
+    public void test_importDic() throws IOException {
         String path = "/dic.txt";
 
         Map<String, Integer> result = DicUtil.importDic(path);
+        System.out.println(result);
+    }
+
+    @Test
+    public void test_importDicByGuava() {
+        String path = "/dic.txt";
+
+        Map<String, Integer> result = DicUtil.importDicByGuava(path);
         System.out.println(result);
     }
 }
