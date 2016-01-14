@@ -9,6 +9,7 @@ import freemarker.core.ParseException;
 import freemarker.template.MalformedTemplateNameException;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateNotFoundException;
+import org.apache.commons.lang.StringUtils;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import java.io.File;
@@ -363,7 +364,7 @@ public class PdfUtil {
             out = new FileOutputStream(outputFile);
             render = PdfHelper.getRender();
             render.setDocumentFromString(html);
-            if(imageDiskPath != null && !imageDiskPath.equals("")) {
+            if(StringUtils.isNotBlank(imageDiskPath)) {
                 //html中如果有图片，图片的路径则使用这里设置的路径的相对路径，这个是作为根路径
                 render.getSharedContext().setBaseURL("file:/" + imageDiskPath);
             }
@@ -393,14 +394,13 @@ public class PdfUtil {
      * @param imageDiskPath 如果PDF中要求图片，那么需要传入图片所在位置的磁盘路径
      * @param data 输入到FTL中的数据
      */
-    public static OutputStream generateToOutputStream(String ftlPath, String ftlName, String imageDiskPath, Object data) throws TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException, DocumentException {
+    public static OutputStream generateToOutputStream(String ftlPath, String ftlName, String imageDiskPath, Object data, OutputStream out) throws TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException, DocumentException {
         String html = PdfHelper.getPdfContent(ftlPath, ftlName, data);
-        OutputStream out = null;
         ITextRenderer render = null;
         try {
             render = PdfHelper.getRender();
             render.setDocumentFromString(html);
-            if(imageDiskPath != null && !imageDiskPath.equals("")) {
+            if(StringUtils.isNotBlank(imageDiskPath)) {
                 //html中如果有图片，图片的路径则使用这里设置的路径的相对路径，这个是作为根路径
                 render.getSharedContext().setBaseURL("file:/" + imageDiskPath);
             }
