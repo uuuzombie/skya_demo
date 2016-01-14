@@ -100,12 +100,14 @@ public class FileUtil {
 
 
     /**
-     * 常规读取文件，采用BufferedReader
+     * BufferedReader 字符流
+     * 读取文件
      * @param path
      * @throws IOException
      */
-    public static void readFile(String path) {
+    public static void readFileByBufferedReader(String path) {
 
+//        File inputFile = new File(path);      //绝对路径
 //        File inputFile = new File(this.getClass().getResource(path).getFile()); // 如果path路径文件不存在，则会抛空指针
 
         //另一种读取文件方式，更安全
@@ -142,10 +144,73 @@ public class FileUtil {
     }
 
     /**
-     * 写文件，采用PrintStream
+     * BufferedWriter 字符流
+     * 写文件
+     * @param filePath 结果存放目录，不用提前建好result.txt
+     * @throws IOException
+     */
+    public static void writeFileByBufferedWriter(String filePath) throws IOException {
+        URL absolutePath = FileUtil.class.getResource(filePath);
+        System.out.println(absolutePath);
+
+        File file = new File(absolutePath.getPath() + File.separatorChar + "result.txt"); //根据给出的存放路径，存放结果文件
+        if (!file.exists() && !file.createNewFile()) {
+            throw new RuntimeException("Can not create file!");
+        }
+
+        BufferedWriter bw = null;
+        try {
+            bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
+
+            bw.write("Something");
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            if (bw != null) {
+                bw.close();
+            }
+        }
+    }
+
+    /**
+     * BufferedWriter 字符流
+     * 写文件
+     * @param filePath 结果存放目录，不用提前建好result.txt
+     * @throws IOException
+     */
+    public static void writeFileByBufferedWriterUseCloses(String filePath) throws IOException {
+        URL absolutePath = FileUtil.class.getResource(filePath);
+        System.out.println(absolutePath);
+
+        File file = new File(absolutePath.getPath() + File.separatorChar + "result.txt"); //根据给出的存放路径，存放结果文件
+        if (!file.exists() && !file.createNewFile()) {
+            throw new RuntimeException("Can not create file!");
+        }
+
+        BufferedWriter bw = null;
+        boolean threw = true;
+        try {
+            bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
+
+            bw.write("Something");
+
+            threw = false;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            Closeables.close(bw, threw);     // If an exception occurs, rethrow it only if threw==false
+        }
+    }
+
+
+    /**
+     * PrintStream  字符流
+     * 写文件
+     * PrintStream 也可以认为是一个辅助工具。主要可以向其他输出流，或者FileInputStream 写入数据，本身内部实现还是带缓冲的。本质上是对其它流的综合运用的一个工具而已
      * @param path 输出结果文件
      */
-    public static void writeFile(String path) {
+    public static void writeFileByPrintStream(String path) {
         //File outputFile = new File(path);    //文件不需要提前建好
 
         //另一种读取文件方式，更安全
@@ -175,42 +240,15 @@ public class FileUtil {
         }
     }
 
-    /**
-     * 另一种写文件方法，采用BufferedWriter
-     * @param filePath 结果存放目录，不用提前建好result.txt
-     * @throws IOException
-     */
-    public static void writeFileByBuffer(String filePath) throws IOException {
-        URL absolutePath = FileUtil.class.getResource(filePath);
-        System.out.println(absolutePath);
 
-        File file = new File(absolutePath.getPath() + File.separatorChar + "result.txt"); //根据给出的存放路径，存放结果文件
-        if (!file.exists() && !file.createNewFile()) {
-            throw new RuntimeException("Can not create file!");
-        }
-
-        BufferedWriter bw = null;
-        boolean threw = true;
-        try {
-            bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
-
-            bw.write("Something");
-
-            threw = false;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } finally {
-            Closeables.close(bw, threw);     // If an exception occurs, rethrow it only if threw==false
-        }
-
-    }
 
     /**
+     * BufferedInputStream 字节流
      * 读取文件到byte list中
      * @param path
      * @return
      */
-    public static List<Byte> readFileToByte(String path) {
+    public static void readFileByBufferdInputStream(String path) {
         List<Byte> byteList = Lists.newArrayList();
 
         BufferedInputStream br = null;
@@ -237,9 +275,17 @@ public class FileUtil {
                 }
             }
         }
-        return byteList;
     }
 
+
+    /**
+     * BufferedOutputStream 字节流
+     * 写文件
+     * @param path
+     */
+    public static void writeFileByBufferedOutputStream(String path) {
+
+    }
 
 
 }
