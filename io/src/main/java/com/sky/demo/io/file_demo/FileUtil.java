@@ -3,9 +3,11 @@ package com.sky.demo.io.file_demo;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.common.io.Closeables;
+import com.google.common.primitives.Bytes;
 
 import java.io.*;
 import java.net.URL;
+import java.util.Base64;
 import java.util.List;
 
 /**
@@ -17,7 +19,6 @@ public class FileUtil {
 
     /**
      * 读取某一文件夹下所有文件，不包括子文件夹
-     *
      * @param path
      * @return
      */
@@ -38,7 +39,6 @@ public class FileUtil {
 
     /**
      * 获取一个文件夹下所有文件，包括子文件下的 结果存入全局变量，采用递归方式
-     *
      * @param path
      * @return
      */
@@ -101,7 +101,6 @@ public class FileUtil {
 
     /**
      * 常规读取文件，采用BufferedReader
-     *
      * @param path
      * @throws IOException
      */
@@ -138,13 +137,16 @@ public class FileUtil {
 
     /**
      * 写文件，采用PrintStream
-     *
      * @param path 输出结果文件
      */
     public static void writeFile(String path) {
         //File outputFile = new File(path);    //文件不需要提前建好
 
-        File outputFile = new File(FileUtil.class.getResource(path).getFile()); // 如果path路径文件不存在，则会NPE
+        //另一种读取文件方式，更安全
+        URL resource = FileUtil.class.getResource(path);
+        Preconditions.checkNotNull(resource);
+
+        File outputFile = new File(resource.getFile()); // 如果path路径文件不存在，则会NPE
         if (outputFile.exists()) {
             outputFile.delete();
         }
@@ -155,6 +157,7 @@ public class FileUtil {
 
             printStream = new PrintStream(outputFile);
             printStream.println("Something");
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -168,7 +171,6 @@ public class FileUtil {
 
     /**
      * 另一种写文件方法，采用BufferedWriter
-     *
      * @param filePath 结果存放目录，不用提前建好result.txt
      * @throws IOException
      */
@@ -196,4 +198,42 @@ public class FileUtil {
         }
 
     }
+
+    /**
+     * 读取文件到byte list中
+     * @param path
+     * @return
+     */
+    public static List<Byte> readFileToByte(String path) {
+        List<Byte> byteList = Lists.newArrayList();
+
+        BufferedInputStream br = null;
+        try {
+            br = new BufferedInputStream(new FileInputStream(path));
+
+            byte[] buffer = new byte[1024];
+            int length = 0;
+            while ((length = br.read(buffer)) != -1) {
+                for (int i = 0; i < length; ++i) {
+                    byteList.add(buffer[i]);
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return byteList;
+    }
+
+
+
 }
