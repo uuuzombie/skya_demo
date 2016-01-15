@@ -28,7 +28,7 @@ public class FileUtilTest {
 
     @Test
     public void test_getFileList(){
-        String path = "/Users/rg/gitproject/sky_demo/io/";
+        String path = "/test";
         //String path = "";  //getResource() 方式，读取路径不能加 /
 
         List<String> fileList = FileUtil.getFileList(path);
@@ -39,7 +39,6 @@ public class FileUtilTest {
 
     @Test
     public void test_readPath(){
-
         String path1 = "/test.txt";
         System.out.println(FileUtil.readPath(path1));   //在demo.io/file_demo/target/classes/test.txt
 
@@ -49,41 +48,41 @@ public class FileUtilTest {
     }
 
     @Test
-    public void test_readFile() throws IOException {
-        String path = "/test.txt";
-        FileUtil.readFile(path);
-    }
-
-    @Test(expected = NullPointerException.class)
-    public void test_readFile_input_file_not_exist() throws IOException {
-        String path = "/fileNotExist.txt";
-        FileUtil.readFile(path);
-    }
-
-    @Test
-    public void test_writeFile(){
-        String path = "/result.txt";
-        FileUtil.writeFile(path);
-    }
-
-    @Test(expected = NullPointerException.class)
-    public void test_writeFile_result_file_not_exist(){
-        String path = "fileNotExist.txt";
-        FileUtil.writeFile(path);
-    }
-
-    @Test
-    public void test_writeFileByBuffer() throws IOException {
-        String path = "/";
-        FileUtil.writeFileByBuffer(path);
-    }
-
-
-
-    @Test
     public void test_getAbsolutePath() {
         String fileName = "/text.txt";
         System.out.println(FileUtil.getAbsolutePath(fileName));
 
     }
+
+
+
+
+    @Test
+    public void test_readFileByBufferedReader() throws IOException {
+        String path = "/test.txt";
+        FileUtil.readFileByBufferedReader(path);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void test_readFileByBufferedReader_input_file_not_exist() throws IOException {
+        String path = "/fileNotExist.txt";
+        FileUtil.readFileByBufferedReader(path);
+    }
+
+    @Test
+    public void test_writeFileByBufferedWriter() throws IOException {
+        String path = "/result.txt";
+//        String path = "/";
+        FileUtil.writeFileByBufferedWriter(path);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void test_writeFileByBufferedWriter_result_file_not_exist() throws IOException {
+        String path = "fileNotExist.txt";
+        FileUtil.writeFileByBufferedWriter(path);
+    }
+
+
+
+
 }

@@ -151,7 +151,6 @@ public class FileUtil {
      */
     public static void writeFileByBufferedWriter(String filePath) throws IOException {
         URL absolutePath = FileUtil.class.getResource(filePath);
-        System.out.println(absolutePath);
 
         File file = new File(absolutePath.getPath() + File.separatorChar + "result.txt"); //根据给出的存放路径，存放结果文件
         if (!file.exists() && !file.createNewFile()) {
@@ -179,7 +178,7 @@ public class FileUtil {
      * @param filePath 结果存放目录，不用提前建好result.txt
      * @throws IOException
      */
-    public static void writeFileByBufferedWriterUseCloses(String filePath) throws IOException {
+    public static void writeFileByBufferedWriterUseCloseables(String filePath) throws IOException {
         URL absolutePath = FileUtil.class.getResource(filePath);
         System.out.println(absolutePath);
 
@@ -207,7 +206,8 @@ public class FileUtil {
     /**
      * PrintStream  字符流
      * 写文件
-     * PrintStream 也可以认为是一个辅助工具。主要可以向其他输出流，或者FileInputStream 写入数据，本身内部实现还是带缓冲的。本质上是对其它流的综合运用的一个工具而已
+     * PrintStream 也可以认为是一个辅助工具。主要可以向其他输出流，或者FileInputStream 写入数据，本身内部实现还是带缓冲的。
+     * 本质上是对其它流的综合运用的一个工具而已
      * @param path 输出结果文件
      */
     public static void writeFileByPrintStream(String path) {
