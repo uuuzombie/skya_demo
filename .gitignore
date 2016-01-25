@@ -1,5 +1,3 @@
-# kdiff3 ignore
-*.orig
 
 # maven ignore
 target/
@@ -22,6 +20,9 @@ target/
 *.diff
 *.patch
 *.tmp
+
+# kdiff3 ignore
+*.orig
 
 # system ignore
 .DS_Store

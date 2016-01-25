@@ -1,14 +1,15 @@
 package com.sky.demo.io.file_demo;
 
+import java.io.*;
+import java.net.URL;
+import java.util.List;
+
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.common.io.Closeables;
-import com.google.common.primitives.Bytes;
-
-import java.io.*;
-import java.net.URL;
-import java.util.Base64;
-import java.util.List;
+import com.google.common.io.Closer;
+import com.google.common.io.FileWriteMode;
+import com.google.common.io.Files;
 
 /**
  * Created by rg on 15/6/28.
@@ -99,9 +100,11 @@ public class FileUtil {
     }
 
 
+    //===============================================================
+
     /**
      * BufferedReader 字符流
-     * 读取文件
+     * 读取文件 以行为单位读取文件，常用于读面向行的格式化文件n
      * @param path
      * @throws IOException
      */
@@ -241,6 +244,8 @@ public class FileUtil {
     }
 
 
+    //===============================================================
+
 
     /**
      * BufferedInputStream 字节流
@@ -295,4 +300,50 @@ public class FileUtil {
     }
 
 
+
+
+    public static void copyFile(String inputPath, String outputPath){
+
+    }
+
+
+    public static void copyFileByTryWithResources(String inputPath, String outputPath){
+
+//        try (
+//                java.util.zip.ZipFile zf = new java.util.zip.ZipFile(zipFileName);
+//                java.io.BufferedWriter writer = java.nio.file.Files.newBufferedWriter(outputFilePath, charset)
+//        ) {
+//            // Enumerate each entry
+//            for (java.util.Enumeration entries = zf.entries(); entries.hasMoreElements();) {
+//                // Get the entry name and write it to the output file
+//                String newLine = System.getProperty("line.separator");
+//                String zipEntryName = ((java.util.zip.ZipEntry)entries.nextElement()).getName() + newLine;
+//                writer.write(zipEntryName, 0, zipEntryName.length());
+//            }
+//        }
+    }
+
+    public static void copyFileByCloser(String inputPath, String outputPath) throws IOException {
+
+        Closer closer = Closer.create();
+
+        try {
+//            InputStream in = closer.register();
+//            OutputStream out = closer.register();
+
+
+        } catch (Throwable e) {
+            throw closer.rethrow(e);
+        } finally {
+            closer.close();
+        }
+
+    }
+
+
+    public static void copyFileByGuava(String inputPath, String outputPath) throws IOException {
+
+        Files.asByteSource(new File(inputPath)).copyTo(Files.asByteSink(new File(outputPath), FileWriteMode.APPEND));
+
+    }
 }
