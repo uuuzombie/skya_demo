@@ -283,7 +283,14 @@ public class FileUtil {
      * 写文件
      * @param path
      */
-    public static void writeFileByBufferedOutputStream(String path) {
+    public static void writeFileByBufferedOutputStream(String path) throws IOException {
+        URL absolutePath = FileUtil.class.getResource(path);
+        System.out.println(absolutePath);
+
+        File file = new File(absolutePath.getPath()); //根据给出的存放路径，存放结果文件
+        if (!file.exists() && !file.createNewFile()) {
+            throw new RuntimeException("Can not create file!");
+        }
 
     }
 
