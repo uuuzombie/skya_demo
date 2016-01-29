@@ -72,20 +72,19 @@ public class FileUtil {
      * @param path
      * @return
      */
-    public static URL readPath(String path) {
+    public static URL getPath(String path) {
         URL resourceURL = FileUtil.class.getResource(path);
         return resourceURL;
     }
 
     /**
      * 读取路径
-     * @param fileName
+     * @param path
      * @return
      */
-    public static String getAbsolutePath(String fileName) {
-        URL resourceURL = FileUtil.class.getResource(fileName);
-        System.out.println(resourceURL.toString());
-        return resourceURL.getPath();
+    public static String getAbsolutePath(String path) {
+        URL resourceURL = FileUtil.class.getResource(path);
+        return resourceURL == null ? null : resourceURL.getPath();
     }
 
     /**
@@ -124,9 +123,11 @@ public class FileUtil {
         try {
             br = new BufferedReader(new InputStreamReader(new FileInputStream(inputFile), "utf-8"));
 
+            int i = 1;
             String line;
             while ((line = br.readLine()) != null) {
                 //TODO
+                System.out.println(i++ + ":" + line);
             }
 
         } catch (UnsupportedEncodingException e) {

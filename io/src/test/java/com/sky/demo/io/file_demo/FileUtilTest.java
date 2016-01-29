@@ -38,24 +38,35 @@ public class FileUtilTest {
     }
 
     @Test
-    public void test_readPath(){
+    public void test_getPath(){
         String path1 = "/test.txt";
-        System.out.println(FileUtil.readPath(path1));   //在demo.io/file_demo/target/classes/test.txt
+        System.out.println(FileUtil.getPath(path1));   //在demo/io/target/classes/test.txt
 
         String path2 = "test.txt";
-        System.out.println(FileUtil.readPath(path2));   //在demo.io/file_demo/target/classes/com/sky/demo/test.txt
+        System.out.println(FileUtil.getPath(path2));   //在demo/io/target/classes/com/sky/demo/test.txt
+
+        String path3 = "D:\\test.txt";
+        System.out.println(FileUtil.getPath(path3));   //error
 
     }
 
     @Test
     public void test_getAbsolutePath() {
-        String fileName = "/text.txt";
-        System.out.println(FileUtil.getAbsolutePath(fileName));
+
+        String path1 = "/test.txt";
+        System.out.println(FileUtil.getAbsolutePath(path1));   //在demo/io/target/classes/test.txt
+
+        String path2 = "test.txt";
+        System.out.println(FileUtil.getAbsolutePath(path2));   //在demo/io/target/classes/com/sky/demo/test.txt
+
+        String path3 = "D:\\test.txt";
+        System.out.println(FileUtil.getAbsolutePath(path3));   //error
 
     }
 
 
 
+    //===============================================================
 
     @Test
     public void test_readFileByBufferedReader() throws IOException {
@@ -71,8 +82,8 @@ public class FileUtilTest {
 
     @Test
     public void test_writeFileByBufferedWriter() throws IOException {
-        String path = "/result.txt";
-//        String path = "/";
+//        String path = "/result.txt";
+        String path = "/";
         FileUtil.writeFileByBufferedWriter(path);
     }
 
