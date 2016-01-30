@@ -40,17 +40,17 @@ public class FileOpt {
         return reportables;
     }
 
-    public static void writeFile(List<Reportable> reportables, String path){
+    public static void writeFile(List<Reportable> reportables, String path) throws IOException {
 
-        File outputFile = new File(FileOpt.class.getResource(path).getFile());
+        URL resource = FileOpt.class.getResource(path);
+        Preconditions.checkNotNull(resource);
+
+        File outputFile = new File(resource.getFile());
         if (outputFile.exists()) {
             outputFile.delete();
         }
-
-        try {
-            outputFile.createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (!outputFile.createNewFile()) {
+            throw new RuntimeException("can not create file");
         }
 
         PrintStream printStream = null;
