@@ -73,8 +73,8 @@ public class FileUtil {
      * @return
      */
     public static URL getPath(String path) {
-        URL resourceURL = FileUtil.class.getResource(path);
-        return resourceURL;
+        URL resource = FileUtil.class.getResource(path);
+        return resource;
     }
 
     /**
@@ -83,8 +83,8 @@ public class FileUtil {
      * @return
      */
     public static String getAbsolutePath(String path) {
-        URL resourceURL = FileUtil.class.getResource(path);
-        return resourceURL == null ? null : resourceURL.getPath();
+        URL resource = FileUtil.class.getResource(path);
+        return resource == null ? null : resource.getPath();
     }
 
     /**
@@ -108,11 +108,10 @@ public class FileUtil {
      * @throws IOException
      */
     public static void readFileByBufferedReader(String path) {
+        //1.绝对路径     path = "/" -> D:\\ or /
+        //File inputFile = new File(path);
 
-//        File inputFile = new File(path);      //绝对路径
-//        File inputFile = new File(this.getClass().getResource(path).getFile()); // 如果path路径文件不存在，则会抛空指针
-
-        //另一种读取文件方式，更安全
+        //2.另一种读取文件方式，更安全   path = "/" -> demo/io/target/classes/
         URL resource = FileUtil.class.getResource(path);
         Preconditions.checkNotNull(resource);
         File inputFile = new File(resource.getFile());
@@ -121,13 +120,14 @@ public class FileUtil {
 
         BufferedReader br = null;
         try {
+            //InputStreamReader 是一个连接字节流和字符流的桥梁，它将字节流转变为字符流
             br = new BufferedReader(new InputStreamReader(new FileInputStream(inputFile), "utf-8"));
 
             int i = 1;
             String line;
             while ((line = br.readLine()) != null) {
                 //TODO
-                System.out.println(i++ + ":" + line);
+                i = process(i, line);
             }
 
         } catch (UnsupportedEncodingException e) {
@@ -147,25 +147,42 @@ public class FileUtil {
         }
     }
 
+    private static int process(int i, String line) {
+        System.out.println(i++ + ":" + line);
+        return i;
+    }
+
+
     /**
      * BufferedWriter 字符流
      * 写文件
-     * @param filePath 结果存放目录，不用提前建好result.txt
+     *
+     * @param path
+     * @param content
      * @throws IOException
      */
-    public static void writeFileByBufferedWriter(String filePath) throws IOException {
-        URL absolutePath = FileUtil.class.getResource(filePath);
+    public static void writeFileByBufferedWriter(String path, String content) throws IOException {
+        //1.绝对路径     path = "/" -> D:\\ or /
+        //File outputFile = new File(path);
 
-        File file = new File(absolutePath.getPath() + File.separatorChar + "result.txt"); //根据给出的存放路径，存放结果文件
-        if (!file.exists() && !file.createNewFile()) {
+        //2.   path = "/" -> demo/io/target/classes/
+        URL resource = FileUtil.class.getResource(path);
+        Preconditions.checkNotNull(resource);
+        File outputFile = new File(resource.getPath());     // + File.separatorChar + "result.txt"
+
+        if (outputFile.exists()) {
+            outputFile.delete();
+        }
+        if (!outputFile.createNewFile()) {
             throw new RuntimeException("Can not create file!");
         }
 
         BufferedWriter bw = null;
         try {
-            bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
+            //OutputStreamWriter 是OutputStream 到Writer 转换的桥梁
+            bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFile)));
 
-            bw.write("Something");
+            bw.write(content);
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -179,28 +196,36 @@ public class FileUtil {
     /**
      * BufferedWriter 字符流
      * 写文件
-     * @param filePath 结果存放目录，不用提前建好result.txt
+     * @param path
+     * @param content
      * @throws IOException
      */
-    public static void writeFileByBufferedWriterUseCloseables(String filePath) throws IOException {
-        URL absolutePath = FileUtil.class.getResource(filePath);
-        System.out.println(absolutePath);
+    public static void writeFileByBufferedWriterUseCloseables(String path, String content) throws IOException {
+        //1.绝对路径     path = "/" -> D:\\ or /
+        //File outputFile = new File(path);
 
-        File file = new File(absolutePath.getPath() + File.separatorChar + "result.txt"); //根据给出的存放路径，存放结果文件
-        if (!file.exists() && !file.createNewFile()) {
+        //2.   path = "/" -> demo/io/target/classes/
+        URL resource = FileUtil.class.getResource(path);
+        Preconditions.checkNotNull(resource);
+
+        //根据给出的存放路径，存放结果文件
+        File outputFile = new File(resource.getPath());   // + File.separatorChar + "result.txt"
+        if (outputFile.exists()) {
+            outputFile.delete();
+        }
+        if (!outputFile.createNewFile()) {
             throw new RuntimeException("Can not create file!");
         }
 
         BufferedWriter bw = null;
         boolean threw = true;
         try {
-            bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
+            //OutputStreamWriter 是OutputStream 到Writer 转换的桥梁
+            bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFile)));
 
-            bw.write("Something");
+            bw.write(content);
 
             threw = false;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } finally {
             Closeables.close(bw, threw);     // If an exception occurs, rethrow it only if threw==false
         }
@@ -212,26 +237,29 @@ public class FileUtil {
      * 写文件
      * PrintStream 也可以认为是一个辅助工具。主要可以向其他输出流，或者FileInputStream 写入数据，本身内部实现还是带缓冲的。
      * 本质上是对其它流的综合运用的一个工具而已
-     * @param path 输出结果文件
+     * @param path
+     * @param content
      */
-    public static void writeFileByPrintStream(String path) {
-        //File outputFile = new File(path);    //文件不需要提前建好
+    public static void writeFileByPrintStream(String path, String content) throws IOException {
+        //1.绝对路径
+        //File outputFile = new File(path);
 
-        //另一种读取文件方式，更安全
+        //2.
         URL resource = FileUtil.class.getResource(path);
         Preconditions.checkNotNull(resource);
+        File outputFile = new File(resource.getFile());
 
-        File outputFile = new File(resource.getFile()); // 如果path路径文件不存在，则会NPE
         if (outputFile.exists()) {
             outputFile.delete();
+        }
+        if (!outputFile.createNewFile()) {
+            throw new RuntimeException("Can not create file!");
         }
 
         PrintStream printStream = null;
         try {
-            outputFile.createNewFile();
-
             printStream = new PrintStream(outputFile);
-            printStream.println("Something");
+            printStream.println(content);
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -254,28 +282,42 @@ public class FileUtil {
      * @param path
      * @return
      */
-    public static void readFileByBufferdInputStream(String path) {
-        List<Byte> byteList = Lists.newArrayList();
+    public static void readFileByBufferedInputStream(String path) {
+        //1.绝对路径    path = "/" -> D:\\ or /
+        //File inputFile = new File(path);
 
-        BufferedInputStream br = null;
+        //2.另一种读取文件方式，更安全   path = "/" -> demo/io/target/classes/
+        URL resource = FileUtil.class.getResource(path);
+        Preconditions.checkNotNull(resource);
+        File inputFile = new File(resource.getFile());
+
+        Preconditions.checkState(inputFile.exists() && inputFile.isFile());
+
+        List<Byte> byteList = Lists.newArrayList();
+        BufferedInputStream bri = null;
         try {
-            br = new BufferedInputStream(new FileInputStream(path));
+            bri = new BufferedInputStream(new FileInputStream(inputFile));
 
             byte[] buffer = new byte[1024];
             int length = 0;
-            while ((length = br.read(buffer)) != -1) {
-                for (int i = 0; i < length; ++i) {
-                    byteList.add(buffer[i]);
+            String str;
+            int i = 0;
+            while ((length = bri.read(buffer)) != -1) {
+                for (int j = 0; j < length; ++j) {
+                    byteList.add(buffer[j]);
                 }
+
+                str = new String(buffer, 0, length);
+                System.out.println(i + ":" + str);
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            if (br != null) {
+            if (bri != null) {
                 try {
-                    br.close();
+                    bri.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -289,49 +331,159 @@ public class FileUtil {
      * 写文件
      * @param path
      */
-    public static void writeFileByBufferedOutputStream(String path) throws IOException {
-        URL absolutePath = FileUtil.class.getResource(path);
-        System.out.println(absolutePath);
+    public static void writeFileByBufferedOutputStream(String path, String content) throws IOException {
+        //1.绝对路径
+        //File outputFile = new File(path);
 
-        File file = new File(absolutePath.getPath()); //根据给出的存放路径，存放结果文件
-        if (!file.exists() && !file.createNewFile()) {
+        //2.
+        URL resource = FileUtil.class.getResource(path);
+        Preconditions.checkNotNull(resource);
+        File outputFile = new File(resource.getFile());
+
+        if (outputFile.exists()) {
+            outputFile.delete();
+        }
+        if (!outputFile.createNewFile()) {
             throw new RuntimeException("Can not create file!");
         }
 
+        BufferedOutputStream bos = null;
+        try {
+            bos = new BufferedOutputStream(new FileOutputStream(outputFile));
+
+            byte[] bytes = content.getBytes();
+            bos.write(bytes);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            if (bos != null) {
+                bos.close();
+            }
+        }
     }
 
 
+    //===============================================================
 
+    /**
+     * BufferedInputStream & BufferedOutputStream 字节流
+     * 复制文件
+     * @param inputPath
+     * @param outputPath
+     */
+    public static void copyFileByBuffered(String inputPath, String outputPath) throws IOException {
+        //1.绝对路径
+        //File inputFile = new File(inputPath);
+        //File outputFile = new File(outputPath);
 
-    public static void copyFile(String inputPath, String outputPath){
+        //2.
+        URL inputResource = FileUtil.class.getResource(inputPath);
+        Preconditions.checkNotNull(inputResource);
+        File inputFile = new File(inputResource.getFile());
 
+        URL outputResource = FileUtil.class.getResource(outputPath);
+        Preconditions.checkNotNull(outputPath);
+        File outputFile = new File(outputResource.getFile());
+
+        BufferedInputStream bis = null;
+        BufferedOutputStream bos = null;
+        try {
+            bis = new BufferedInputStream(new FileInputStream(inputFile));
+            bos = new BufferedOutputStream(new FileOutputStream(outputFile));
+
+            byte[] buffer = new byte[1024];
+            int length = 0;
+            while ((length = bis.read(buffer)) != -1) {
+                bos.write(buffer, 0, length);
+                bos.flush();
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            if (bis != null) {
+                bis.close();
+            }
+            if (bos != null) {
+                bos.close();
+            }
+        }
     }
 
 
-    public static void copyFileByTryWithResources(String inputPath, String outputPath){
+    /**
+     * 复制文件
+     * since JDK7, try里面所有实现接口java.lang.AutoCloseable，包括java.io.Closeable的对象，在{}的语句块执行完毕后都会自动的close
+     * @param inputPath
+     * @param outputPath
+     */
+    public static void copyFileByTryWithResources(String inputPath, String outputPath) {
+        //1.绝对路径
+        //File inputFile = new File(inputPath);
+        //File outputFile = new File(outputPath);
 
-//        try (
-//                java.util.zip.ZipFile zf = new java.util.zip.ZipFile(zipFileName);
-//                java.io.BufferedWriter writer = java.nio.file.Files.newBufferedWriter(outputFilePath, charset)
-//        ) {
-//            // Enumerate each entry
-//            for (java.util.Enumeration entries = zf.entries(); entries.hasMoreElements();) {
-//                // Get the entry name and write it to the output file
-//                String newLine = System.getProperty("line.separator");
-//                String zipEntryName = ((java.util.zip.ZipEntry)entries.nextElement()).getName() + newLine;
-//                writer.write(zipEntryName, 0, zipEntryName.length());
-//            }
-//        }
+        //2.
+        URL inputResource = FileUtil.class.getResource(inputPath);
+        Preconditions.checkNotNull(inputResource);
+        File inputFile = new File(inputResource.getFile());
+
+        URL outputResource = FileUtil.class.getResource(outputPath);
+        Preconditions.checkNotNull(outputPath);
+        File outputFile = new File(outputResource.getFile());
+
+
+        try (
+            BufferedInputStream bis = new BufferedInputStream(new FileInputStream(inputFile));
+            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(outputFile));
+        ) {
+
+            byte[] buffer = new byte[1024];
+            int length = 0;
+            while ((length = bis.read(buffer)) != -1) {
+                bos.write(buffer, 0, length);
+                bos.flush();
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public static void copyFileByCloser(String inputPath, String outputPath) throws IOException {
+    /**
+     * 复制文件
+     * @param inputPath
+     * @param outputPath
+     * @throws IOException
+     */
+    public static void copyFileByBufferedUseCloser(String inputPath, String outputPath) throws IOException {
+        //1.绝对路径
+        //File inputFile = new File(inputPath);
+        //File outputFile = new File(outputPath);
+
+        //2.
+        URL inputResource = FileUtil.class.getResource(inputPath);
+        Preconditions.checkNotNull(inputResource);
+        File inputFile = new File(inputResource.getFile());
+
+        URL outputResource = FileUtil.class.getResource(outputPath);
+        Preconditions.checkNotNull(outputPath);
+        File outputFile = new File(outputResource.getFile());
 
         Closer closer = Closer.create();
 
+        BufferedInputStream bis = null;
+        BufferedOutputStream bos = null;
         try {
-//            InputStream in = closer.register();
-//            OutputStream out = closer.register();
+            bis = closer.register(new BufferedInputStream(new FileInputStream(inputFile)));
+            bos = closer.register(new BufferedOutputStream(new FileOutputStream(outputFile)));
 
+            byte[] buffer = new byte[1024];
+            int length = 0;
+            while ((length = bis.read(buffer)) != -1) {
+                bos.write(buffer, 0, length);
+                bos.flush();
+            }
 
         } catch (Throwable e) {
             throw closer.rethrow(e);
@@ -341,10 +493,27 @@ public class FileUtil {
 
     }
 
+    /**
+     * 复制文件
+     * @param inputPath
+     * @param outputPath
+     * @throws IOException
+     */
+    public static void copyFileBySourceAndSink(String inputPath, String outputPath) throws IOException {
+        //1.绝对路径
+        //File inputFile = new File(inputPath);
+        //File outputFile = new File(outputPath);
 
-    public static void copyFileByGuava(String inputPath, String outputPath) throws IOException {
+        //2.
+        URL inputResource = FileUtil.class.getResource(inputPath);
+        Preconditions.checkNotNull(inputResource);
+        File inputFile = new File(inputResource.getFile());
 
-        Files.asByteSource(new File(inputPath)).copyTo(Files.asByteSink(new File(outputPath), FileWriteMode.APPEND));
+        URL outputResource = FileUtil.class.getResource(outputPath);
+        Preconditions.checkNotNull(outputPath);
+        File outputFile = new File(outputResource.getFile());
+
+        Files.asByteSource(inputFile).copyTo(Files.asByteSink(outputFile, FileWriteMode.APPEND));
 
     }
 }
