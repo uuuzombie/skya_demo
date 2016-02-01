@@ -111,7 +111,7 @@ public class FileUtil {
         //1.绝对路径     path = "/" -> D:\\ or /
         //File inputFile = new File(path);
 
-        //2.另一种读取文件方式，更安全   path = "/" -> demo/io/target/classes/
+        //2.Resource    path = "/" -> demo/io/target/classes/
         URL resource = FileUtil.class.getResource(path);
         Preconditions.checkNotNull(resource);
         File inputFile = new File(resource.getFile());
@@ -165,7 +165,7 @@ public class FileUtil {
         //1.绝对路径     path = "/" -> D:\\ or /
         //File outputFile = new File(path);
 
-        //2.   path = "/" -> demo/io/target/classes/
+        //2.Resource    path = "/" -> demo/io/target/classes/
         URL resource = FileUtil.class.getResource(path);
         Preconditions.checkNotNull(resource);
         File outputFile = new File(resource.getPath());     // + File.separatorChar + "result.txt"
@@ -204,7 +204,7 @@ public class FileUtil {
         //1.绝对路径     path = "/" -> D:\\ or /
         //File outputFile = new File(path);
 
-        //2.   path = "/" -> demo/io/target/classes/
+        //2.Resource    path = "/" -> demo/io/target/classes/
         URL resource = FileUtil.class.getResource(path);
         Preconditions.checkNotNull(resource);
 
@@ -244,7 +244,7 @@ public class FileUtil {
         //1.绝对路径
         //File outputFile = new File(path);
 
-        //2.
+        //2.Resource
         URL resource = FileUtil.class.getResource(path);
         Preconditions.checkNotNull(resource);
         File outputFile = new File(resource.getFile());
@@ -335,7 +335,7 @@ public class FileUtil {
         //1.绝对路径
         //File outputFile = new File(path);
 
-        //2.
+        //2.Resource
         URL resource = FileUtil.class.getResource(path);
         Preconditions.checkNotNull(resource);
         File outputFile = new File(resource.getFile());
@@ -377,14 +377,23 @@ public class FileUtil {
         //File inputFile = new File(inputPath);
         //File outputFile = new File(outputPath);
 
-        //2.
+        //2.Resource
         URL inputResource = FileUtil.class.getResource(inputPath);
         Preconditions.checkNotNull(inputResource);
         File inputFile = new File(inputResource.getFile());
 
+        Preconditions.checkState(inputFile.exists() && inputFile.isFile());
+
         URL outputResource = FileUtil.class.getResource(outputPath);
         Preconditions.checkNotNull(outputPath);
         File outputFile = new File(outputResource.getFile());
+
+        if (outputFile.exists()) {
+            outputFile.delete();
+        }
+        if (!outputFile.createNewFile()) {
+            throw new RuntimeException("Can not create file!");
+        }
 
         BufferedInputStream bis = null;
         BufferedOutputStream bos = null;
@@ -418,19 +427,28 @@ public class FileUtil {
      * @param inputPath
      * @param outputPath
      */
-    public static void copyFileByTryWithResources(String inputPath, String outputPath) {
+    public static void copyFileByTryWithResources(String inputPath, String outputPath) throws IOException {
         //1.绝对路径
         //File inputFile = new File(inputPath);
         //File outputFile = new File(outputPath);
 
-        //2.
+        //2.Resource
         URL inputResource = FileUtil.class.getResource(inputPath);
         Preconditions.checkNotNull(inputResource);
         File inputFile = new File(inputResource.getFile());
 
+        Preconditions.checkState(inputFile.exists() && inputFile.isFile());
+
         URL outputResource = FileUtil.class.getResource(outputPath);
         Preconditions.checkNotNull(outputPath);
         File outputFile = new File(outputResource.getFile());
+
+        if (outputFile.exists()) {
+            outputFile.delete();
+        }
+        if (!outputFile.createNewFile()) {
+            throw new RuntimeException("Can not create file!");
+        }
 
 
         try (
@@ -461,14 +479,23 @@ public class FileUtil {
         //File inputFile = new File(inputPath);
         //File outputFile = new File(outputPath);
 
-        //2.
+        //2.Resource
         URL inputResource = FileUtil.class.getResource(inputPath);
         Preconditions.checkNotNull(inputResource);
         File inputFile = new File(inputResource.getFile());
 
+        Preconditions.checkState(inputFile.exists() && inputFile.isFile());
+
         URL outputResource = FileUtil.class.getResource(outputPath);
         Preconditions.checkNotNull(outputPath);
         File outputFile = new File(outputResource.getFile());
+
+        if (outputFile.exists()) {
+            outputFile.delete();
+        }
+        if (!outputFile.createNewFile()) {
+            throw new RuntimeException("Can not create file!");
+        }
 
         Closer closer = Closer.create();
 
@@ -504,14 +531,23 @@ public class FileUtil {
         //File inputFile = new File(inputPath);
         //File outputFile = new File(outputPath);
 
-        //2.
+        //2.Resource
         URL inputResource = FileUtil.class.getResource(inputPath);
         Preconditions.checkNotNull(inputResource);
         File inputFile = new File(inputResource.getFile());
 
+        Preconditions.checkState(inputFile.exists() && inputFile.isFile());
+
         URL outputResource = FileUtil.class.getResource(outputPath);
         Preconditions.checkNotNull(outputPath);
         File outputFile = new File(outputResource.getFile());
+
+        if (outputFile.exists()) {
+            outputFile.delete();
+        }
+        if (!outputFile.createNewFile()) {
+            throw new RuntimeException("Can not create file!");
+        }
 
         Files.asByteSource(inputFile).copyTo(Files.asByteSink(outputFile, FileWriteMode.APPEND));
 
