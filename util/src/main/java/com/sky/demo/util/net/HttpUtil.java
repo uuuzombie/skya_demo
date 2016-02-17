@@ -18,7 +18,7 @@ public class HttpUtil {
      * 获取用户ip地址
      * @param request
      */
-    public static String getIpAddr(HttpServletRequest request) {
+    public static String getUserIpAddress(HttpServletRequest request) {
 
         String ip = request.getHeader("X-Real-IP");
         if (StringUtils.isNotBlank(ip) && !StringUtils.equalsIgnoreCase("unknown",ip)) {
@@ -42,7 +42,7 @@ public class HttpUtil {
 
 
 
-    public static String getServerIp() {
+    public static String getServerIpAddress() {
         String serverIp = null;
         try {
             Enumeration netInterfaces = NetworkInterface.getNetworkInterfaces();

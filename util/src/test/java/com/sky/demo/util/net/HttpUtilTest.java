@@ -8,13 +8,13 @@ import org.junit.Test;
 public class HttpUtilTest {
 
     @Test
-    public void test_getIpAddr() {
+    public void test_getUserIpAddress() {
 
     }
 
     @Test
     public void test_getServerIp() {
-        String ip = HttpUtil.getServerIp();
+        String ip = HttpUtil.getServerIpAddress();
         System.out.println(ip);
     }
 
