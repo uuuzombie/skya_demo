@@ -172,7 +172,13 @@ public class FileUtil {
 
         if (outputFile.exists()) {
             outputFile.delete();
+        } else {
+            if (!outputFile.getParentFile().exists()) {
+                outputFile.getParentFile().mkdirs();
+            }
         }
+
+
         if (!outputFile.createNewFile()) {
             throw new RuntimeException("Can not create file!");
         }
@@ -212,7 +218,12 @@ public class FileUtil {
         File outputFile = new File(resource.getPath());   // + File.separatorChar + "result.txt"
         if (outputFile.exists()) {
             outputFile.delete();
+        } else {
+            if (!outputFile.getParentFile().exists()) {
+                outputFile.getParentFile().mkdirs();
+            }
         }
+
         if (!outputFile.createNewFile()) {
             throw new RuntimeException("Can not create file!");
         }
@@ -251,7 +262,12 @@ public class FileUtil {
 
         if (outputFile.exists()) {
             outputFile.delete();
+        } else {
+            if (!outputFile.getParentFile().exists()) {
+                outputFile.getParentFile().mkdirs();
+            }
         }
+
         if (!outputFile.createNewFile()) {
             throw new RuntimeException("Can not create file!");
         }
@@ -342,7 +358,12 @@ public class FileUtil {
 
         if (outputFile.exists()) {
             outputFile.delete();
+        } else {
+            if (!outputFile.getParentFile().exists()) {
+                outputFile.getParentFile().mkdirs();
+            }
         }
+
         if (!outputFile.createNewFile()) {
             throw new RuntimeException("Can not create file!");
         }
@@ -390,7 +411,12 @@ public class FileUtil {
 
         if (outputFile.exists()) {
             outputFile.delete();
+        } else {
+            if (!outputFile.getParentFile().exists()) {
+                outputFile.getParentFile().mkdirs();
+            }
         }
+
         if (!outputFile.createNewFile()) {
             throw new RuntimeException("Can not create file!");
         }
@@ -445,7 +471,12 @@ public class FileUtil {
 
         if (outputFile.exists()) {
             outputFile.delete();
+        } else {
+            if (!outputFile.getParentFile().exists()) {
+                outputFile.getParentFile().mkdirs();
+            }
         }
+
         if (!outputFile.createNewFile()) {
             throw new RuntimeException("Can not create file!");
         }
@@ -492,7 +523,12 @@ public class FileUtil {
 
         if (outputFile.exists()) {
             outputFile.delete();
+        } else {
+            if (!outputFile.getParentFile().exists()) {
+                outputFile.getParentFile().mkdirs();
+            }
         }
+
         if (!outputFile.createNewFile()) {
             throw new RuntimeException("Can not create file!");
         }
@@ -544,7 +580,12 @@ public class FileUtil {
 
         if (outputFile.exists()) {
             outputFile.delete();
+        } else {
+            if (!outputFile.getParentFile().exists()) {
+                outputFile.getParentFile().mkdirs();
+            }
         }
+
         if (!outputFile.createNewFile()) {
             throw new RuntimeException("Can not create file!");
         }
