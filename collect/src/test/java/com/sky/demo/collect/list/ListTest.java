@@ -5,6 +5,8 @@ import com.sky.demo.collect.model.User;
 import org.junit.Test;
 
 import java.util.*;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * Created by rg on 2015/6/23.
@@ -134,6 +136,37 @@ public class ListTest {
             }
         });
         System.out.println("after :" + list);
+    }
+
+
+    @Test
+    public void test_stream_filter_by_predicate() {
+
+        List<User> users = Lists.newArrayList(new User(1, "zhang"), new User(4, "hao"), new User(3, "li"));
+        List<User> existedUsers = Lists.newArrayList(new User(1, "zhang"), new User(2, "wang"), new User(3, "li"));
+
+        Predicate<User> filterCommon = c -> existedUsers.stream().anyMatch(u -> u.getId().equals(c.getId()));
+        List<User> needUpdateUsers = users.stream().filter(filterCommon).collect(Collectors.toList());
+        System.out.println(needUpdateUsers);
+
+
+        Predicate<User> filterDifference = c -> existedUsers.stream().noneMatch(u -> u.getId().equals(c.getId()));
+        List<User> needAddUsers = users.stream().filter(filterDifference).collect(Collectors.toList());
+        System.out.println(needAddUsers);
+    }
+
+    @Test
+    public void test_stream_filter() {
+
+        List<User> users = Lists.newArrayList(new User(1, "zhang"), new User(4, "hao"), new User(3, "li"));
+        List<User> existedUsers = Lists.newArrayList(new User(1, "zhang"), new User(2, "wang"), new User(3, "li"));
+
+        Set<Integer> commonIds = existedUsers.stream().map(User::getId).collect(Collectors.toSet());
+        List<User> needUpdateUsers = users.stream().filter(user -> commonIds.contains(user.getId())).collect(Collectors.toList());
+        System.out.println(needUpdateUsers);
+
+        List<User> needAddUsers = users.stream().filter(user -> !commonIds.contains(user.getId())).collect(Collectors.toList());
+        System.out.println(needAddUsers);
     }
 
 }
