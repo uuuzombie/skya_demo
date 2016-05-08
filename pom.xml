@@ -20,6 +20,7 @@
         <module>interfaces</module>
         <module>util</module>
         <module>cache</module>
+        <module>algorithm</module>
     </modules>
 
     <properties>
