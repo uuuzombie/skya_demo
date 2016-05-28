@@ -15,11 +15,8 @@ public class ListTest {
 
     @Test
     public void test_Iterator1(){
-        List<Integer> list = Lists.newArrayList();
-
-        list.add(1);
-        list.add(2);
-        list.add(3);
+        List<Integer> list = Lists.newArrayList(1, 2, 3);
+        System.out.println(list);
 
         Iterator<Integer> it = list.iterator();
         while (it.hasNext()) {
@@ -29,36 +26,71 @@ public class ListTest {
 
     @Test
     public void test_Iterator2(){
-        List<Integer> list = Lists.newArrayList();
-
-        list.add(1);
-        list.add(2);
-        list.add(3);
+        List<Integer> list = Lists.newArrayList(1, 2, 3);
+        System.out.println(list);
 
         Iterator<Integer> it = list.iterator();
         System.out.println(it);
         System.out.println(it.next());
         System.out.println(it);
+        System.out.println(it.next());
+
     }
 
     @Test
-    public void test_Iterator_remove(){
-        List<Integer> list = Lists.newArrayList();
-
-        list.add(1);
-        list.add(2);
-        list.add(3);
-
+    public void test_remove_iterator(){
+        List<Integer> list = Lists.newArrayList(1, 2, 3);
         System.out.println(list);
+
         Iterator<Integer> it = list.iterator();
         while (it.hasNext()) {
             //it.remove();
-            System.out.println(it.next());
-            it.remove();            //remove()前调用next()，否则会越界
+            System.out.println(it.next());  //next()必须在remove()前调用，否则会越界
+            it.remove();
         }
-
         System.out.println(list);
     }
+
+    @Test
+    public void test_remove_for(){
+        List<Integer> list = Lists.newArrayList(1, 2, 3);
+        System.out.println(list);
+
+        //error 不会删除完list
+        for (int i = 0; i < list.size(); ++i) {
+            //System.out.println(list.get(i));
+            list.remove(i);
+        }
+        System.out.println(list);
+    }
+
+    @Test
+    public void test_remove_for_length(){
+        List<Integer> list = Lists.newArrayList(1, 2, 3);
+        System.out.println(list);
+
+        //error java.lang.IndexOutOfBoundsException: Index: 2, Size: 1
+        for (int i = 0, length = list.size() ; i < length; ++i) {
+            //System.out.println(list.get(i));
+            list.remove(i);
+        }
+        System.out.println(list);
+    }
+
+    @Test
+    public void test_remove_foreach(){
+        List<Integer> list = Lists.newArrayList(1, 2, 3);
+        System.out.println(list);
+
+        //error  java.util.ConcurrentModificationException
+        //在一个foreach循环中，编译器会使.next()在删除元素之后被调用，因此抛出ConcurrentModificationException异常
+        for (Integer integer : list ) {
+            //System.out.println(list.get(i));
+            list.remove(integer);
+        }
+        System.out.println(list);
+    }
+
 
 
     //List 插入有序，且允许重复
