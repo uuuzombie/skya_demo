@@ -1,6 +1,7 @@
 package com.sky.demo.common.reflet;
 
 import com.sky.demo.common.reflect.bean.User;
+import com.sky.demo.common.reflect.bean.UserType;
 import com.sky.demo.common.reflect.bean.VipUser;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,6 +20,7 @@ public class ReflectTest {
 
     private static final String USER_PWD = "com.sky.demo.common.reflect.bean.User";
     private static final String VIP_USER_PWD = "com.sky.demo.common.reflect.bean.VipUser";
+    private static final String USER_TYPE = "com.sky.demo.common.reflect.bean.UserType";
 
     @Before
     public void setUp(){
@@ -148,7 +150,8 @@ public class ReflectTest {
     @Test
     public void test_getDeclaredFields(){
 
-        //getDeclaredFields()获得某个类的所有申明的字段，即包括public、private和protected，但是不包括父类的申明字段。
+        //getDeclaredFields()获得某个类的所有申明的字段，即包括public、private和protected，
+        // 但是不包括父类的申明字段。
         Field[] declaredFields = User.class.getDeclaredFields();
         for (Field declaredField : declaredFields) {
             System.out.println(declaredField.getName());
@@ -194,5 +197,36 @@ public class ReflectTest {
         } else {
             System.out.println("getClass判断，不是一个user");
         }
+    }
+
+
+    @Test
+    public void test_get_static_method_invoke() {
+        try {
+            Class<?> aclass = Class.forName(USER_TYPE);
+            System.out.println(aclass);
+
+            Method getByCode = aclass.getDeclaredMethod("getByCode", int.class);
+            System.out.println(getByCode.getName());
+
+            //static invoke use Class in first param
+            UserType userType = (UserType) getByCode.invoke(UserType.class, 1);
+            System.out.println(userType);
+
+            //error
+//            UserType userType2 = (UserType) getByCode.invoke(new UserType(), 1);
+//            System.out.println(userType2);
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+
     }
 }

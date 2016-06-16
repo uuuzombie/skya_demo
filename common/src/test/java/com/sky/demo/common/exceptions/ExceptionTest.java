@@ -32,4 +32,18 @@ public class ExceptionTest {
             System.out.println("finally");      //finally 会输出
         }
     }
+
+    @Test
+    public void test_null_point() {
+
+        try {
+            throw new NullPointerException("xxx");
+
+//            System.out.println("should not print");
+        } catch (Exception e) {
+            System.out.println("Exception  catch NullPointerException");
+        }
+
+        System.out.println("end");
+    }
 }
