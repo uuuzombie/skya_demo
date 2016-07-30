@@ -6,15 +6,11 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Created by rg on 2015/7/16.
+ * Created by rg on 2016/7/25.
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface RelationColumn {
+public @interface Relation {
 
-    String value();
-
-    boolean isShield() default false;
-
-    Class enumClass() default Void.class;
+    String value() default "";
 }
