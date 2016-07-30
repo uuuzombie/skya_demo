@@ -11,10 +11,10 @@ public class FieldChangeInfo implements Serializable {
 
     private static final long serialVersionUID = -421899640427171026L;
 
-    private String propertyName;
-    private String propertyHeader;
-    private Object from;
-    private Object to;
+    private String propertyName;            //属性名称
+    private String propertyHeader;          //属性头
+    private Object from;                    //原值
+    private Object to;                      //修改后值
 
     public String getPropertyName() {
         return propertyName;

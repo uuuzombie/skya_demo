@@ -41,7 +41,7 @@ public class ExceptionTest {
 
 //            System.out.println("should not print");
         } catch (Exception e) {
-            System.out.println("Exception  catch NullPointerException");
+            System.out.println("Exception catch NullPointerException");
         }
 
         System.out.println("end");
