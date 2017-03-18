@@ -3,7 +3,7 @@ package com.sky.demo.thread.producer_consumer.handler;
 
 import com.sky.demo.thread.producer_consumer.model.CubbyHole;
 
-public class Consumer extends Thread{
+public class Consumer extends Thread {
 
     private CubbyHole res;
 

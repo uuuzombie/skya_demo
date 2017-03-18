@@ -10,9 +10,7 @@ public class DeadLock {
 
 
     public void methodA() throws Exception{
-
         synchronized (lockA) {
-
             Thread.sleep(2000);
             synchronized (lockB) {
                 System.out.println("end method A");

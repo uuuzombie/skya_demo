@@ -8,7 +8,6 @@ public class Producer extends Thread {
     private CubbyHole res;
 
     public Producer(CubbyHole res) {
-
         this.res = res;
     }
 
