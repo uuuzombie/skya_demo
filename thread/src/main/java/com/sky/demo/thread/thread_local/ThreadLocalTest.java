@@ -5,13 +5,14 @@ package com.sky.demo.thread.thread_local;
  */
 public class ThreadLocalTest {
 
-//    public static String QT = null;
-//    public static ThreadLocal<String> QT = new ThreadLocal<String>();
-    public static ThreadLocal<String> QT = new InheritableThreadLocal<String>();
+//    public static String QT = null;         //子线程会继承父线程的变量
+    public static ThreadLocal<String> QT = new ThreadLocal<String>();           //子线程不会继承
+//    public static ThreadLocal<String> QT = new InheritableThreadLocal<String>(); //子线程会继承父线程的变量
 
     public static void main(String[] args) {
 
-        QT.set("aaa");      //子线程会继承父线程的变量
+        QT.set("aaa");
+//        QT = "aaa";
 
         int count = 1000;
 
