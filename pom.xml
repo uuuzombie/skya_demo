@@ -307,12 +307,6 @@
                 <!--<version>1.0.13</version>-->
             <!--</dependency>-->
 
-
-            <dependency>
-                <groupId>javax.servlet</groupId>
-                <artifactId>javax.servlet-api</artifactId>
-                <version>3.1.0</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -525,10 +519,6 @@
             <artifactId>jsqlparser</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-        </dependency>
 
     </dependencies>
 
