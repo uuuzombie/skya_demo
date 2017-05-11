@@ -28,6 +28,8 @@ public class HashMapVsConcurrentHashMap {
     private static final String KEY = "key";
     private static Object lock = new Object();
 
+
+    //synchronized 锁this对象，即HashMapVsConcurrentHashMap.class
     public synchronized void syncAdd(Map<String, Integer> map, String key) {
         Integer value = map.get(key);
         if (value == null) {
@@ -67,15 +69,22 @@ public class HashMapVsConcurrentHashMap {
 
                     for (int j = 0; j < 100; ++j) {
                         if (map instanceof HashMap) {
-                            syncAdd(map, KEY);
-                        } else if (map instanceof ConcurrentHashMap) {
-                            //syncAdd(map, KEY);  //ConcurrentHashMap 用关键字synchronized修饰add方法,运行之后仍然是线程不安全的 ?
-
-                            //add(map, KEY);  //不安全
+//                            add(map, KEY);  //不安全
+//                            syncAdd(map, KEY); //安全
 
                             synchronized (lock) {  //安全
                                 add(map, KEY);
                             }
+
+                        } else if (map instanceof ConcurrentHashMap) {
+                            //add(map, KEY);  //不安全
+//                            syncAdd(map, KEY);  //安全  synchronized 锁方法syncAdd()，锁上调用syncAdd()的对象，即锁定this
+
+                            synchronized (lock) {  //安全
+                                add(map, KEY);
+                            }
+                        } else {
+                            System.out.println("invalid instance");
                         }
                     }
                 }
@@ -98,7 +107,6 @@ public class HashMapVsConcurrentHashMap {
     public static void main(String[] args) throws InterruptedException {
 
         new HashMapVsConcurrentHashMap().performTest(hashMap);
-
         new HashMapVsConcurrentHashMap().performTest(concurrentHashMap);
     }
 
