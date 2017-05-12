@@ -6,6 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import com.google.common.collect.Maps;
 
@@ -29,16 +30,6 @@ public class HashMapVsConcurrentHashMap {
     private static Object lock = new Object();
 
 
-    //synchronized 锁this对象，即HashMapVsConcurrentHashMap.class
-    public synchronized void syncAdd(Map<String, Integer> map, String key) {
-        Integer value = map.get(key);
-        if (value == null) {
-            map.put(key, 1);
-        } else {
-            map.put(key, value + 1);
-        }
-    }
-
     public void add(Map<String, Integer> map, String key) {
 
         //并不是原子操作，它包含了三步：
@@ -56,6 +47,17 @@ public class HashMapVsConcurrentHashMap {
         }
     }
 
+    //synchronized 锁this对象，即HashMapVsConcurrentHashMap.class
+    public synchronized void syncAdd(Map<String, Integer> map, String key) {
+        Integer value = map.get(key);
+        if (value == null) {
+            map.put(key, 1);
+        } else {
+            map.put(key, value + 1);
+        }
+    }
+
+
     public void performTest(Map<String, Integer> map) throws InterruptedException {
         System.out.println("Test for " + map.getClass());
 
@@ -69,20 +71,20 @@ public class HashMapVsConcurrentHashMap {
 
                     for (int j = 0; j < 100; ++j) {
                         if (map instanceof HashMap) {
-//                            add(map, KEY);  //不安全
+                            add(map, KEY);  //不安全
 //                            syncAdd(map, KEY); //安全
 
-                            synchronized (lock) {  //安全
-                                add(map, KEY);
-                            }
+//                            synchronized (lock) {  //安全
+//                                add(map, KEY);
+//                            }
 
                         } else if (map instanceof ConcurrentHashMap) {
-                            //add(map, KEY);  //不安全
+                            add(map, KEY);  //不安全
 //                            syncAdd(map, KEY);  //安全  synchronized 锁方法syncAdd()，锁上调用syncAdd()的对象，即锁定this
 
-                            synchronized (lock) {  //安全
-                                add(map, KEY);
-                            }
+//                            synchronized (lock) {  //安全
+//                                add(map, KEY);
+//                            }
                         } else {
                             System.out.println("invalid instance");
                         }

@@ -9,7 +9,7 @@ public class DeadLockDemo {
     private static String B = "B";
 
 
-    private void deadLock() {
+    public void deadLock() {
 
         Thread t1 = new Thread(new Runnable() {
             @Override

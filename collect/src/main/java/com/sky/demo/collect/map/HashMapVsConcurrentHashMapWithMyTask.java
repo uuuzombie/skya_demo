@@ -58,21 +58,31 @@ public class HashMapVsConcurrentHashMapWithMyTask {
             for (int j = 0; j < 100; ++j) {
                 if (map instanceof HashMap) {
 //                    add(map, KEY);      //不安全
-//                    syncAdd(map, KEY);  //不安全！
+                    syncAdd(map, KEY);  //不安全！
 
-                    synchronized (lock) {  //安全
-                        add(map, KEY);
-                    }
+//                    synchronized (lock) {  //安全
+//                        add(map, KEY);
+//                    }
                 } else if (map instanceof ConcurrentHashMap) {
 //                    add(map, KEY);      //不安全
-//                    syncAdd(map, KEY);  //不安全！ synchronized锁住的是MyTask对象，每个线程的MyTask是独立的，上锁没意义
+                    syncAdd(map, KEY);  //不安全！ synchronized锁住的是MyTask对象，每个线程的MyTask是独立的，上锁没意义
 
-                    synchronized (lock) {  //安全
-                        add(map, KEY);
-                    }
+//                    synchronized (lock) {  //安全
+//                        add(map, KEY);
+//                    }
                 } else {
                     System.out.println("invalid instance");
                 }
+            }
+        }
+
+
+        private void add(Map<String, Integer> map, String key) {
+            Integer value = map.get(key);
+            if (value == null) {
+                map.put(key, 1);
+            } else {
+                map.put(key, value + 1);
             }
         }
 
@@ -86,22 +96,6 @@ public class HashMapVsConcurrentHashMapWithMyTask {
             }
         }
 
-        private void add(Map<String, Integer> map, String key) {
-
-            //并不是原子操作，它包含了三步：
-            //1.map.get
-            //2.加1
-            //3.map.put
-            //其中第1和第3步，单独来说都是线程安全的，由ConcurrentHashMap保证。但是由于在上面的代码中，map本身是一个共享变量。
-            //当线程A执行map.get的时候，其它线程可能正在执行map.put，这样一来当线程A执行到map.put的时候，线程A的值就已经是脏数据了，然后脏数据覆盖了真值，导致线程不安全
-
-            Integer value = map.get(key);
-            if (value == null) {
-                map.put(key, 1);
-            } else {
-                map.put(key, value + 1);
-            }
-        }
     }
 
 
