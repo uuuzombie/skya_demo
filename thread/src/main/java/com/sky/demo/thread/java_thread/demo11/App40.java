@@ -13,6 +13,25 @@ public class App40 {
     private Condition condition = lock.newCondition();
 
 
+    //producer
+    public void conditionSignal() {
+
+        try {
+            lock.lock();
+
+            System.out.println("condition signal time=" + System.currentTimeMillis());
+            condition.signal();
+//            condition.signalAll();
+            System.out.println("condition signal end");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    //consumer
     public void conditionAwait() {
 
         try {
@@ -29,19 +48,4 @@ public class App40 {
         }
     }
 
-    public void conditionSignal() {
-
-        try {
-            lock.lock();
-
-            System.out.println("condition signal time=" + System.currentTimeMillis());
-            condition.signal();
-            System.out.println("condition signal end");
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            lock.unlock();
-        }
-    }
 }

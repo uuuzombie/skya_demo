@@ -5,7 +5,7 @@ package com.sky.demo.thread.java_thread.demo07;
  */
 public class DemoThread_2 extends Thread {
 
-    private DeadLock deadLock = new DeadLock();
+    private DeadLock deadLock;
 
     public DemoThread_2(DeadLock deadLock) {
         this.deadLock = deadLock;
