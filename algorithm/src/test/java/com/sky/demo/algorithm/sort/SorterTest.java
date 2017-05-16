@@ -21,12 +21,18 @@ public class SorterTest {
         int[] array3 = new int[]{3, 2, 6, 1, 8, 2, 4, 9};
         int[] array4 = new int[]{2, 2, 6, 1, 1, 2, 4, 9};
         int[] array5 = new int[]{3, 2, 6, 1, 8, 2, 4, 9};
+        int[] array6 = new int[]{};
+        int[] array7 = new int[]{3};
+//        int[] array8 = null;
 
         arrayList.add(array1);
         arrayList.add(array2);
         arrayList.add(array3);
         arrayList.add(array4);
         arrayList.add(array5);
+        arrayList.add(array6);
+        arrayList.add(array7);
+//        arrayList.add(array8);
 
 
     }
