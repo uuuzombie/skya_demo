@@ -23,7 +23,8 @@ import java.util.concurrent.CompletableFuture;
  * 异步非阻塞
  * 全异步
  * Callback方式调用
- * 使用场景：不考虑回调时间且只能对结果做简单处理，如果依赖服务是两个或两个以上服务，则不能合并两个服务的处理结果;不阻塞主请求线程，但使用场景有限。
+ * 使用场景：不考虑回调时间且只能对结果做简单处理，如果依赖服务是两个或两个以上服务，则不能合并两个服务的处理结果;
+ * 不阻塞主请求线程，但使用场景有限。
  * 另：Guava ListenableFuture.addListener()
  */
 public class AsyncNonBlockDemo {

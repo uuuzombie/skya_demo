@@ -1,11 +1,8 @@
 package com.sky.demo.thread.sin.future;
 
-import com.google.common.util.concurrent.Futures;
 import com.sky.demo.thread.sin.future.service.HttpService;
 import com.sky.demo.thread.sin.future.service.RpcService;
 
-import java.util.Random;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -15,7 +12,8 @@ import java.util.concurrent.Future;
  * 异步阻塞
  * 半异步
  * 线程池，异步Future
- * 使用场景：并发请求多服务，总耗时为最长响应时间;提升总响应时间，但是阻塞主请求线程，高并发时依然会造成线程数过多，CPU上下文切换;
+ * 使用场景：并发请求多服务，总耗时为最长响应时间;
+ * 提升总响应时间，但是阻塞主请求线程，高并发时依然会造成线程数过多，CPU上下文切换;
  */
 public class AsyncBlockDemo {
 
