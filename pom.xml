@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.sky.demo</groupId>
-    <artifactId>sky_demo</artifactId>
+    <artifactId>skya_demo</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
 
@@ -523,7 +523,7 @@
     </dependencies>
 
     <build>
-        <finalName>sky_demo</finalName>
+        <finalName>skya_demo</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
