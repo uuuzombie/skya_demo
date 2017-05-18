@@ -1,7 +1,5 @@
-package com.sky.demo.thread.sin.producer_consumer.handler;
+package com.sky.demo.thread.sin.producer_consumer.cubby;
 
-
-import com.sky.demo.thread.sin.producer_consumer.model.CubbyHole;
 
 public class Producer extends Thread {
 

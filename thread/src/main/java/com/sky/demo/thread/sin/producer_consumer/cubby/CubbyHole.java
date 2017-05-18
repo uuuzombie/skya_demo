@@ -1,4 +1,4 @@
-package com.sky.demo.thread.sin.producer_consumer.model;
+package com.sky.demo.thread.sin.producer_consumer.cubby;
 
 /**
  * Created by rg on 2014/6/23.
@@ -7,11 +7,11 @@ public class CubbyHole {
 
     private int data;
 
-    private boolean getable = false;		//boolean 默认为false
+    private volatile boolean getable = false;		//boolean 默认为false
 
     public synchronized int get() {
 
-        while(getable == false){
+        while(!getable){
             try{
                 wait();
             }catch (Exception e) {
@@ -25,7 +25,7 @@ public class CubbyHole {
     }
 
     public synchronized void put(int data) {
-        while(getable == true){
+        while(getable){
             try{
                 wait();
             }catch (Exception e) {

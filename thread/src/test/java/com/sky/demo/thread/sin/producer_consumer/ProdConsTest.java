@@ -1,8 +1,8 @@
 package com.sky.demo.thread.sin.producer_consumer;
 
-import com.sky.demo.thread.sin.producer_consumer.handler.Consumer;
-import com.sky.demo.thread.sin.producer_consumer.handler.Producer;
-import com.sky.demo.thread.sin.producer_consumer.model.CubbyHole;
+import com.sky.demo.thread.sin.producer_consumer.cubby.Consumer;
+import com.sky.demo.thread.sin.producer_consumer.cubby.CubbyHole;
+import com.sky.demo.thread.sin.producer_consumer.cubby.Producer;
 import org.junit.Test;
 
 /**
