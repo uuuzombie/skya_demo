@@ -1,5 +1,7 @@
 package com.sky.demo.thread.sin.thread_pool;
 
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
+
 import java.util.concurrent.*;
 
 /**
@@ -18,6 +20,7 @@ public class AsyncExecutor {
             MAX_POOL_SIZE,
             KEEP_ALIVE_TIME, TimeUnit.SECONDS,
             new ArrayBlockingQueue<Runnable>(MAX_QUEUE_SIZE),
+            new ThreadFactoryBuilder().setNameFormat("AsyncWorkerThread-%d").build(),
             new RejectedExecutionHandler() {  //自定义策略（只打印，不处理）
                 @Override
                 public void rejectedExecution(Runnable r, ThreadPoolExecutor executor) {
