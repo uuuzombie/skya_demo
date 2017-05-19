@@ -23,16 +23,18 @@ public class SorterTest {
         int[] array5 = new int[]{3, 2, 6, 1, 8, 2, 4, 9};
         int[] array6 = new int[]{};
         int[] array7 = new int[]{3};
-//        int[] array8 = null;
+        int[] array8 = new int[]{46, 79, 56, 38, 40, 84};
+        int[] array9 = new int[]{49, 38, 65, 97, 76, 13, 27, 49, 78, 34, 12, 64, 5, 4, 62, 99, 98, 54, 56, 17, 18, 23, 34, 15, 35, 25, 53, 51};
 
-        arrayList.add(array1);
-        arrayList.add(array2);
-        arrayList.add(array3);
-        arrayList.add(array4);
-        arrayList.add(array5);
-        arrayList.add(array6);
-        arrayList.add(array7);
+//        arrayList.add(array1);
+//        arrayList.add(array2);
+//        arrayList.add(array3);
+//        arrayList.add(array4);
+//        arrayList.add(array5);
+//        arrayList.add(array6);
+//        arrayList.add(array7);
 //        arrayList.add(array8);
+        arrayList.add(array9);
 
 
     }
