@@ -1,9 +1,15 @@
 package com.sky.demo.thread.sin.thread_pool;
 
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Created by rg on 15/6/28.
  */
 public class ThreadPoolTest {
+
+    private static final Logger logger = LoggerFactory.getLogger(ThreadPoolTest.class);
 
     // 让可执行程序休息一下
     private static int EXE_TIME = 0;
