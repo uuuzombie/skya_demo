@@ -7,6 +7,7 @@ import org.junit.Test;
 import java.math.BigDecimal;
 import java.util.List;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -17,13 +18,40 @@ public class StringTest {
     @Test
     public void test_equals(){
 
-        String str1 = "abc";
-        String str2 = new String(str1);
+        String str1 = "hello";
+        String str2 = "he" + new String("llo");
+        String str3 = "he" + "llo";
+        String str4 = new String("hello");
+        String str5 = new String("hello");
 
+        assertFalse(str1 == str2);
         assertTrue(str1.equals(str2));
-        assertTrue(!(str1 == str2));        //两个对象，str1地址跟str2地址不同
+        assertTrue(str1 == str2.intern());  //对于任何两个字符串 s 和 t，当且仅当 s.equals(t) 为 true 时，s.intern() == t.intern() 才为 true
+
+
+        assertTrue(str1 == str3);  //两者在编译期就被解析为一个字符串常量
+
+        assertFalse(str1 == str4);  //用new String() 创建的字符串不是常量，不能在编译期就确定
+        assertFalse(str2 == str4);
+        assertFalse(str4 == str5);
 
     }
+
+    @Test
+    public void test_equals_with_intern() {
+        String str1 = "hello";
+        String str2 = "he" + new String("llo");
+
+        assertFalse(str1 == str2);
+        assertTrue(str1.equals(str2));
+        assertTrue(str1 == str2.intern());  //对于任何两个字符串 s 和 t，当且仅当 s.equals(t) 为 true 时，s.intern() == t.intern() 才为 true
+
+
+        String str3 = new String("world");
+        str3.intern();
+        assertFalse(str3 == str3.intern()); //如果在全局String表中没有相同值的字符串，不是将其的地址注册到表中，而是在常量池添加其常量
+    }
+
 
     @Test
     public void test_StringUtils_equals(){
