@@ -25,7 +25,14 @@ public class ThreadLocalTest {
 //                    QT = String.valueOf(finalI);
 //                    System.out.println(Thread.currentThread().getName() + ":" + QT);
 
-//                    QT.set(String.valueOf(finalI));
+                    QT.set(String.valueOf(finalI));
+
+                    System.gc();
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     System.out.println(Thread.currentThread().getName() + ":" + QT.get());
                 }
             }).start();

@@ -5,6 +5,7 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.sky.demo.collect.model.User;
 import org.apache.commons.collections.MapUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,7 +18,7 @@ import static org.junit.Assert.assertTrue;
  * Created by rg on 2015/6/23.
  */
 public class MapTest {
-    Map<String,Object> map = Maps.newHashMap();
+    Map<String, Object> map = Maps.newHashMap();
 
     @Before
     public void setUp(){
@@ -226,6 +227,30 @@ public class MapTest {
 
         System.out.println(MapUtils.isEmpty(map1));
         System.out.println(MapUtils.isEmpty(map2));
+
+    }
+
+
+    @Test
+    public void test_map_remove() {
+
+        Map<String, List<Integer>> cabins = Maps.newHashMap();
+        cabins.put("a", Lists.newArrayList());
+        cabins.put("b", null);
+        cabins.put(null, Lists.newArrayList(1, 2));
+        cabins.put("c", Lists.newArrayList());
+        cabins.put("d", Lists.newArrayList());
+
+
+        Iterator<String> iterator = cabins.keySet().iterator();
+        while (iterator.hasNext()) {
+            String key = iterator.next();
+            if (CollectionUtils.isNotEmpty(cabins.get(key))) {
+                cabins.remove(key);
+            }
+        }
+
+        System.out.println(cabins);
 
     }
 }
