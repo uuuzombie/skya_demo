@@ -5,9 +5,9 @@ import com.google.common.base.Preconditions;
 /**
  * Created by rg on 23/05/2017.
  */
-public class BirnarySearchDemo {
+public class BinarySearchDemo {
 
-
+    //非递归
     public static int binarySearch(int[] array, int value) {
         Preconditions.checkNotNull(array, "array is null");
 
@@ -27,5 +27,28 @@ public class BirnarySearchDemo {
         }
         return -1;
     }
+
+
+    //递归
+    public static int binarySearchRecursion(int[] array, int low, int high, int value) {
+        Preconditions.checkNotNull(array, "array is null");
+
+        int result = -1;
+        if (low > high) {
+            return result;
+        }
+
+        int mid = (high - low) / 2 + low;
+
+        if (array[mid] == value) {
+            result = mid;
+        } else if (array[mid] > value) {
+            result = binarySearchRecursion(array, low, mid - 1, value);
+        } else if (array[mid] < value) {
+            result = binarySearchRecursion(array, mid + 1, high, value);
+        }
+        return result;
+    }
+
 
 }

@@ -20,7 +20,14 @@ public class BinarySearchTest {
     public void test_binarySearch() {
 
         int value = 10;
-        int result = BirnarySearchDemo.binarySearch(array, value);
+        int result = BinarySearchDemo.binarySearch(array, value);
+        System.out.println(result);
+    }
+
+    @Test
+    public void test_binarySearchRecursion() {
+        int value = 0;
+        int result = BinarySearchDemo.binarySearchRecursion(array, 0, array.length - 1, value);
         System.out.println(result);
     }
 
