@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 
 /**
  * Created by rg on 23/05/2017.
+ * 二分查找算法，输入的数组是有序的，升序
  */
 public class BinarySearchDemo {
 
