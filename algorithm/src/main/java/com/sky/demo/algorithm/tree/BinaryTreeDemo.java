@@ -18,6 +18,7 @@ public class BinaryTreeDemo {
         }
 
         System.out.println(root.getValue()); //or do something
+
         if (root.getLeft() != null) {
             preOrderTraversal(root.getLeft());
         }

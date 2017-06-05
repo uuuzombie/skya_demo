@@ -7,10 +7,10 @@ import java.util.Set;
 /**
  * Created by user on 17/6/5.
  */
-public class TreeNode {
+public class MultiTree {
 
     private int value;
-    private Set<TreeNode> subNodes;
+    private Set<MultiTree> subNodes;
 
     public int getValue() {
         return value;
@@ -20,11 +20,11 @@ public class TreeNode {
         this.value = value;
     }
 
-    public Set<TreeNode> getSubNodes() {
+    public Set<MultiTree> getSubNodes() {
         return subNodes;
     }
 
-    public void setSubNodes(Set<TreeNode> subNodes) {
+    public void setSubNodes(Set<MultiTree> subNodes) {
         this.subNodes = subNodes;
     }
 
