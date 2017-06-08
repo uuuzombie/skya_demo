@@ -145,4 +145,29 @@ public class StringTest {
             System.out.println(ch);
         }
     }
+
+    @Test
+    public void test_string_array() {
+        String input = "hello";
+
+        char[] charArray = input.toCharArray();
+
+//        System.out.println(charArray);
+
+        for (int i = 0; i < charArray.length; i++) {
+            System.out.println(charArray[i]);
+        }
+
+
+        //reverse
+        for (int i = 0, len = charArray.length; i < (len - 1) / 2; i++) {
+            char temp = charArray[i];
+            charArray[i] = charArray[len - i - 1];
+            charArray[len - i - 1] = temp;
+        }
+
+        System.out.println(charArray);
+
+
+    }
 }
